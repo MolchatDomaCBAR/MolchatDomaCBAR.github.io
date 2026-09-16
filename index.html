@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101010">
+<meta name="description" content="Archivo editorial no oficial dedicado a Molchat Doma: historia, música, discografía, estética y contexto cultural.">
+<title>МОЛЧАТ ДОМА — Archivo editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#101010;--panel:#181818;--surface:#242424;--text:#ededed;
+  --muted:#929292;--line:#3a3a3a;--red:#e6e6e6;--red-bright:#ffffff;--green:#a0a0a0;
+  --white:#f2f2f2;--max:1280px;--header-h:60px;
+  --display:"Archivo Narrow",Impact,sans-serif;
+  --body:"Inter",Arial,sans-serif;--mono:"IBM Plex Mono",monospace;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.34,1.56,.64,1);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:16px/1.6 var(--body);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+section[id],main#inicio{scroll-margin-top:var(--header-h)}
+::selection{background:#fff;color:#111}
+:focus-visible{outline:2px solid var(--red-bright);outline-offset:3px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.scanlines{position:fixed;inset:0;pointer-events:none;z-index:998;background:repeating-linear-gradient(180deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px);opacity:.6;mix-blend-mode:overlay}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
+.wrap{width:min(calc(100% - 32px),var(--max));margin:auto}
+.section{padding:64px 0;border-top:1px solid var(--line)}
+.section-head{display:grid;grid-template-columns:38px 1fr;gap:12px;margin-bottom:34px}
+.num{font:600 12px var(--mono);color:var(--red-bright);padding-top:5px}
+h2,h3,h4{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.01em}
+h2{font-size:clamp(38px,13vw,76px);line-height:.9}
+.section-sub{grid-column:2;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;max-width:62ch;font-size:14px}
+.mono{font-family:var(--mono)}
+.muted{color:var(--muted)}
+.tag{display:inline-block;border:1px solid var(--line);padding:4px 8px;font:10px var(--mono);color:#aaa;text-transform:uppercase;margin:3px 3px 0 0}
+
+/* ---------- accesibilidad / movimiento ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  .reveal{transition:opacity .25s linear!important;transform:none!important}
+  .status-dot,.hero h1 span.glyph,.scanlines{animation:none!important}
+  *{animation-duration:.01ms!important;animation-iteration-count:1!important}
+}
+
+/* ---------- reveal system (scroll) ---------- */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);transition-delay:calc(var(--i,0) * 70ms)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+
+/* ---------- header ---------- */
+header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(16,16,16,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top);transition:background-color .3s var(--ease-out),border-color .3s var(--ease-out)}
+header.scrolled{background:rgba(12,12,12,.96);border-color:#4a4a4a}
+.nav{height:var(--header-h);display:flex;align-items:center;justify-content:space-between}
+.logo{font:700 17px var(--display);letter-spacing:.04em;position:relative}
+.logo small{display:block;font:9px var(--mono);color:var(--muted);letter-spacing:.08em}
+.desktop-nav{display:none;gap:18px;font:10px var(--mono);text-transform:uppercase}
+.desktop-nav a{position:relative;padding:4px 1px}
+.desktop-nav a:after{content:"";position:absolute;left:0;bottom:-1px;width:100%;height:1px;background:var(--red-bright);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-out)}
+@media(hover:hover) and (pointer:fine){
+  .desktop-nav a:hover{color:#fff}
+  .desktop-nav a:hover:after{transform:scaleX(1)}
+}
+.menu{position:relative;width:42px;height:42px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:border-color .25s var(--ease-out)}
+.menu:active{transform:scale(.94)}
+.menu span{position:absolute;left:12px;width:18px;height:1.5px;background:var(--text);transition:transform .4s var(--ease-spring),opacity .18s linear,top .3s var(--ease-out)}
+.menu span:nth-child(1){top:15px}
+.menu span:nth-child(2){top:20.5px}
+.menu span:nth-child(3){top:26px}
+.menu.open span:nth-child(1){top:20.5px;transform:rotate(45deg)}
+.menu.open span:nth-child(2){opacity:0}
+.menu.open span:nth-child(3){top:20.5px;transform:rotate(-45deg)}
+
+.mobile-menu{position:fixed;inset:var(--header-h) 0 0;background:var(--bg);z-index:99;padding:26px 16px;transform:translateX(102%);transition:transform .45s var(--ease-out);visibility:hidden}
+.mobile-menu.open{transform:none;visibility:visible}
+.mobile-menu a{display:block;padding:14px 0;border-bottom:1px solid var(--line);font:26px var(--display);text-transform:uppercase;opacity:0;transform:translateY(16px);transition:opacity .4s var(--ease-out),transform .4s var(--ease-out)}
+.mobile-menu a span{font:10px var(--mono);color:var(--red-bright);margin-right:12px}
+.mobile-menu.open a{opacity:1;transform:none}
+.mobile-menu.open a:nth-child(1){transition-delay:.06s}
+.mobile-menu.open a:nth-child(2){transition-delay:.11s}
+.mobile-menu.open a:nth-child(3){transition-delay:.16s}
+.mobile-menu.open a:nth-child(4){transition-delay:.21s}
+.mobile-menu.open a:nth-child(5){transition-delay:.26s}
+.mobile-menu.open a:nth-child(6){transition-delay:.31s}
+.mobile-menu.open a:nth-child(7){transition-delay:.36s}
+.mobile-menu.open a:nth-child(8){transition-delay:.41s}
+
+/* ---------- botones ---------- */
+.btn{display:flex;justify-content:center;align-items:center;border:1px solid #666;background:transparent;padding:13px 15px;font:11px var(--mono);text-transform:uppercase;transition:background-color .3s var(--ease-out),color .3s var(--ease-out),border-color .3s var(--ease-out),transform .18s var(--ease-out)}
+.btn.primary{background:var(--red);border-color:var(--red);color:#111}
+@media(hover:hover) and (pointer:fine){.btn:hover{background:var(--white);color:#111;border-color:var(--white)}}
+.btn:active{transform:scale(.97)}
+
+/* ---------- hero ---------- */
+.hero{min-height:100svh;padding:calc(var(--header-h) + 40px) 0 55px;display:flex;align-items:flex-end;position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#101010,#191919)}
+.hero:before{content:"";position:absolute;width:170%;height:60%;right:-55%;bottom:-8%;border:1px solid #303030;transform:skewX(-16deg);box-shadow:0 -110px 0 -109px #303030,0 -220px 0 -219px #303030}
+.hero:after{content:"";position:absolute;inset:auto 0 0;height:42%;background:repeating-linear-gradient(90deg,transparent 0 39px,#262626 40px 41px);opacity:.5}
+.hero-inner{position:relative;z-index:2;width:100%}
+.hero-meta{display:flex;flex-direction:column;gap:5px;font:10px var(--mono);color:var(--muted);text-transform:uppercase;margin-bottom:20px;opacity:0;animation:fadeUp .7s var(--ease-out) .1s forwards}
+.status{display:inline-flex;align-items:center;gap:7px}
+.status-dot{width:6px;height:6px;border-radius:50%;background:var(--red-bright);animation:pulseDot 2.4s ease-in-out infinite}
+.hero h1{font:600 clamp(56px,20vw,170px)/.8 var(--display);text-transform:uppercase;letter-spacing:-.03em;opacity:0;transform:translateY(18px);animation:fadeUp .8s var(--ease-out) .2s forwards}
+.hero h1 .lat{display:block;color:#858585;font:500 clamp(14px,4.6vw,32px)/1 var(--mono);letter-spacing:.08em;margin-top:16px}
+.hero-kicker{margin-top:22px;color:var(--green);font:11px var(--mono);text-transform:uppercase;letter-spacing:.07em;opacity:0;animation:fadeUp .7s var(--ease-out) .35s forwards}
+.hero-desc{margin-top:18px;max-width:600px;border-left:1px solid var(--line);padding-left:15px;color:#b5b5b5;font-size:14px;opacity:0;animation:fadeUp .7s var(--ease-out) .45s forwards}
+.actions{display:flex;flex-direction:column;gap:8px;margin-top:25px;opacity:0;animation:fadeUp .7s var(--ease-out) .55s forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(194,42,50,.5)}50%{opacity:.45;box-shadow:0 0 0 4px rgba(194,42,50,0)}}
+
+.grid2,.grid3{display:grid;grid-template-columns:1fr;gap:28px}
+.lead{font-size:20px;line-height:1.25}
+.data{border-top:1px solid var(--line)}
+.data div{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
+.data dt{font:10px var(--mono);color:var(--muted);text-transform:uppercase}
+.data dd{text-align:right;font-size:13px}
+
+.timeline{border-left:1px solid var(--line);padding-left:22px}
+.event{position:relative;padding-bottom:30px}
+.event:before{content:"";position:absolute;left:-27px;top:5px;width:9px;height:9px;background:var(--red-bright)}
+.event .year{font:11px var(--mono);color:var(--red-bright)}
+.event h3{font-size:24px;margin:4px 0}
+.event p{color:var(--muted);font-size:14px}
+
+.cards{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+.card{background:var(--bg);padding:22px;min-height:180px;transition:background-color .3s var(--ease-out),transform .3s var(--ease-out)}
+@media(hover:hover) and (pointer:fine){.card:hover{background:var(--panel);transform:translateY(-3px)}}
+.card-index{font:10px var(--mono);color:var(--red-bright)}
+.card h3{font-size:26px;margin:30px 0 3px}
+.card p{color:#aaa;font-size:13px}
+
+.feature{border-top:1px solid var(--line);padding:24px 0;display:grid;gap:16px}
+.feature h3{font-size:28px}
+.feature .title-small{font:11px var(--mono);color:var(--muted)}
+
+.album-tabs{display:flex;overflow:auto;gap:16px;border-bottom:1px solid var(--line);margin-bottom:20px;-webkit-overflow-scrolling:touch}
+.album-tabs button{padding:10px 2px;border-bottom:2px solid transparent;color:#888;font:11px var(--mono);white-space:nowrap;transition:color .25s var(--ease-out),border-color .25s var(--ease-out);min-height:44px}
+.album-tabs button.active{color:#fff;border-color:var(--red-bright)}
+.album-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease-out),transform .4s var(--ease-out)}
+.album-grid.fade-in{opacity:1;transform:translateY(0)}
+.album-card{border:1px solid var(--line);background:var(--panel);cursor:pointer;transition:transform .3s var(--ease-out),border-color .3s var(--ease-out);min-height:44px}
+@media(hover:hover) and (pointer:fine){.album-card:hover{transform:translateY(-3px);border-color:#666}}
+.album-card:active{transform:scale(.97)}
+.album-card.active{border-color:var(--red-bright)}
+.album-art{aspect-ratio:1;display:grid;place-items:center;background:#1b1b1b;position:relative;overflow:hidden}
+.album-art:before{content:"";position:absolute;inset:12%;border:1px solid #444}
+.album-art:after{content:"";position:absolute;width:140%;height:1px;background:var(--red-bright);transform:rotate(-34deg)}
+.album-art strong{font:600 clamp(22px,7.5vw,50px) var(--display);z-index:2;text-align:center}
+.album-meta{padding:11px}
+.album-name{font:18px var(--display);text-transform:uppercase}
+.album-year{font:9px var(--mono);color:var(--muted)}
+.album-detail{margin-top:15px;border:1px solid var(--line);background:var(--panel);padding:18px;opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease-out) .05s,transform .4s var(--ease-out) .05s}
+.album-detail.fade-in{opacity:1;transform:translateY(0)}
+.album-detail h3{font-size:26px}
+.tracklist{margin-top:14px;border-top:1px solid var(--line);list-style:none}
+.tracklist li{padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
+.tracklist span{font:10px var(--mono);color:var(--red-bright);margin-right:10px}
+
+.listen-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.listen{border:1px solid var(--line);padding:16px;background:var(--panel);font:11px var(--mono);text-transform:uppercase;min-height:44px;transition:background-color .3s var(--ease-out),color .3s var(--ease-out),transform .3s var(--ease-out)}
+.listen b{display:block;font:22px var(--display);margin-bottom:3px}
+@media(hover:hover) and (pointer:fine){.listen:hover{background:var(--white);color:#111;transform:translateY(-3px)}}
+.listen:active{transform:scale(.97)}
+
+.socials{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.social{border:1px solid var(--line);padding:16px;background:var(--panel);font:11px var(--mono);text-transform:uppercase;min-height:44px;display:flex;align-items:center;transition:background-color .3s var(--ease-out),border-color .3s var(--ease-out),transform .3s var(--ease-out)}
+@media(hover:hover) and (pointer:fine){.social:hover{background:var(--red);border-color:var(--red);color:#111;transform:translateY(-3px)}}
+.social:active{transform:scale(.97)}
+
+.palette{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
+.swatch{height:96px;padding:8px;display:flex;align-items:flex-end;font:9px var(--mono);border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:transform .25s var(--ease-out)}
+.swatch:nth-child(3n){border-right:0}
+@media(hover:hover) and (pointer:fine){.swatch:hover{transform:scale(1.03)}}
+
+.facts{border-top:1px solid var(--line)}
+.fact{padding:15px 0;border-bottom:1px solid var(--line)}
+.fact b{display:block;font:10px var(--mono);color:var(--red-bright);margin-bottom:4px}
+.fact span{color:#aaa;font-size:14px}
+
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;font:19px var(--display);text-transform:uppercase;padding:16px 0;min-height:44px}
+summary::-webkit-details-marker{display:none}
+summary .plus{font:18px var(--mono);color:var(--red-bright);transition:transform .3s var(--ease-spring);flex:none}
+details[open] summary .plus{transform:rotate(45deg)}
+.details-body{overflow:hidden;max-height:0;transition:max-height .35s var(--ease-out)}
+details[open] .details-body{max-height:200px}
+.details-body p{color:#999;font-size:13px;padding-bottom:16px;max-width:65ch}
+
+.sources{display:grid;gap:8px}
+.source{border:1px solid var(--line);padding:14px;background:var(--panel)}
+.source b{display:block;font:10px var(--mono);color:var(--red-bright);margin-bottom:4px}
+.source a{text-decoration:underline;text-decoration-color:#555;text-underline-offset:3px;word-break:break-word}
+
+footer{padding:50px 0 28px;border-top:1px solid var(--line)}
+.footer-title{font:600 clamp(48px,18vw,120px)/.78 var(--display);text-transform:uppercase}
+.footer-grid{display:grid;gap:28px;margin-top:32px}
+.footer-grid h4{font:11px var(--mono);color:var(--muted);margin-bottom:9px}
+.footer-grid a,.footer-grid p{font-size:13px;color:#aaa;display:block;margin:5px 0}
+.copyright{border-top:1px solid var(--line);margin-top:32px;padding-top:14px;font:9px var(--mono);color:#666}
+
+@media(min-width:600px){
+ .wrap{width:min(calc(100% - 48px),var(--max))}
+ .actions{flex-direction:row}.actions .btn{width:auto}
+ .grid2{grid-template-columns:1.15fr .85fr}.grid3{grid-template-columns:repeat(3,1fr)}
+ .cards{grid-template-columns:repeat(2,1fr)}
+ .feature{grid-template-columns:1fr 2fr}
+ .footer-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(min-width:900px){
+ .desktop-nav{display:flex}.menu{display:none}
+ .wrap{width:min(calc(100% - 80px),var(--max))}
+ .section{padding:100px 0}
+ .section-head{grid-template-columns:70px 1fr;gap:22px;margin-bottom:56px}
+ .hero{padding:130px 0 85px}
+ .hero-meta{flex-direction:row;justify-content:space-between}
+ .hero-desc{font-size:16px}
+ .cards{grid-template-columns:repeat(3,1fr)}
+ .album-grid{grid-template-columns:repeat(4,1fr)}
+ .listen-grid{grid-template-columns:repeat(4,1fr)}
+ .socials{grid-template-columns:repeat(4,1fr)}
+}
+@media(max-width:380px){
+ .hero h1{font-size:clamp(48px,19vw,80px)}
+}
+</style>
+</head>
+<body>
+<div class="scanlines" aria-hidden="true"></div>
+<header id="siteHeader">
+  <div class="nav wrap">
+    <a class="logo" href="#inicio">МОЛЧАТ ДОМА<small>ARCHIVO EDITORIAL / 2017—</small></a>
+    <nav class="desktop-nav">
+      <a href="#banda">Banda</a><a href="#musica">Música</a><a href="#discografia">Discografía</a>
+      <a href="#estetica">Estética</a><a href="#cultura">Cultura</a><a href="#redes">Redes</a><a href="#fuentes">Fuentes</a>
+    </nav>
+    <button class="menu" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
+  <a href="#inicio"><span>00</span>Inicio</a>
+  <a href="#banda"><span>01</span>Banda</a>
+  <a href="#musica"><span>02</span>Música</a>
+  <a href="#discografia"><span>03</span>Discografía</a>
+  <a href="#estetica"><span>04</span>Estética</a>
+  <a href="#cultura"><span>05</span>Cultura</a>
+  <a href="#redes"><span>06</span>Redes</a>
+  <a href="#fuentes"><span>07</span>Fuentes</a>
+</nav>
+
+<main id="inicio">
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="hero-meta">
+      <span class="status"><span class="status-dot" aria-hidden="true"></span>53°54′N / 27°34′E — MINSK, BELARUS</span>
+      <span>2017 — ACTUALIDAD</span>
+    </div>
+    <h1>МОЛЧАТ<br>ДОМА<span class="lat">MOLCHAT DOMA</span></h1>
+    <div class="hero-kicker">POST-PUNK / COLDWAVE / NEW WAVE / SYNTH-POP</div>
+    <p class="hero-desc">Archivo editorial no oficial sobre la banda formada en Minsk en 2017: historia, integrantes, sonido, discografía, canciones, estética brutalista, contexto cultural y enlaces oficiales.</p>
+    <div class="actions">
+      <a class="btn primary" href="#banda">Entrar al archivo →</a>
+      <a class="btn" href="#escuchar">Escuchar música →</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="banda">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">01</span><div><h2>La banda</h2><p class="section-sub">Molchat Doma —Молчат Дома— es un trío bielorruso originario de Minsk, activo desde 2017.</p></div></div>
+  <div class="grid2">
+    <div class="reveal"><p class="lead">Su nombre se traduce aproximadamente como «las casas callan» o «las casas guardan silencio». Su música combina post-punk, new wave, synth-pop y coldwave, con bajo prominente, sintetizadores fríos, cajas de ritmo y voz grave.</p></div>
+    <dl class="data reveal">
+      <div><dt>Nombre</dt><dd>Molchat Doma</dd></div>
+      <div><dt>Cirílico</dt><dd>Молчат Дома</dd></div>
+      <div><dt>Origen</dt><dd>Minsk, Bielorrusia</dd></div>
+      <div><dt>Formación</dt><dd>2017</dd></div>
+      <div><dt>Idioma</dt><dd>Ruso</dd></div>
+      <div><dt>Géneros</dt><dd>Post-punk / coldwave / new wave / synth-pop</dd></div>
+      <div><dt>Integrantes</dt><dd>Egor Shkutko · Roman Komogortsev · Pavel Kozlov</dd></div>
+    </dl>
+  </div>
+  <div style="height:50px"></div>
+  <div class="cards">
+    <article class="card reveal" style="--i:0"><span class="card-index">01 / VOZ</span><h3>Egor Shkutko</h3><p>Vocalista. Su interpretación grave y monótona es uno de los rasgos más reconocibles del grupo.</p><span class="tag">VOCAL</span></article>
+    <article class="card reveal" style="--i:1"><span class="card-index">02 / INSTRUMENTOS</span><h3>Roman Komogortsev</h3><p>Guitarra, sintetizadores y caja de ritmos. Parte central de la composición y producción instrumental.</p><span class="tag">GUITARRA</span><span class="tag">SYNTH</span></article>
+    <article class="card reveal" style="--i:2"><span class="card-index">03 / INSTRUMENTOS</span><h3>Pavel Kozlov</h3><p>Bajo y sintetizadores. Sus líneas de bajo funcionan como columna vertebral de muchas canciones.</p><span class="tag">BAJO</span><span class="tag">SYNTH</span></article>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">01.1</span><div><h2>Historia</h2><p class="section-sub">Del circuito underground de Minsk a una audiencia internacional.</p></div></div>
+  <div class="timeline">
+    <article class="event reveal" style="--i:0"><span class="year">2017</span><h3>Formación</h3><p>El proyecto surge en Minsk y publica <i>С крыш наших домов</i>, su álbum debut.</p></article>
+    <article class="event reveal" style="--i:1"><span class="year">2018</span><h3>Этажи</h3><p>El segundo álbum consolida el sonido minimalista y coldwave y amplía la circulación internacional del grupo.</p></article>
+    <article class="event reveal" style="--i:2"><span class="year">2019—2020</span><h3>Viralización</h3><p>«Судно» gana una enorme difusión en redes y streaming, ampliando radicalmente la audiencia de la banda.</p></article>
+    <article class="event reveal" style="--i:3"><span class="year">2020</span><h3>Monument</h3><p>El tercer álbum, publicado por Sacred Bones, amplía la producción sin abandonar la identidad sonora.</p></article>
+    <article class="event reveal" style="--i:4"><span class="year">2024</span><h3>Белая Полоса</h3><p>El cuarto álbum de estudio incorpora nuevas texturas y fue publicado el 6 de septiembre de 2024.</p></article>
+    <article class="event reveal" style="--i:5"><span class="year">2025—2026</span><h3>Nueva etapa</h3><p>Continúan los lanzamientos y la actividad internacional, incluyendo <i>Live at Panorama Hotel</i> y <i>Belaya Polosa Remixes</i>.</p></article>
+  </div>
+</div>
+</section>
+
+<section class="section" id="musica">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">02</span><div><h2>Música</h2><p class="section-sub">Un cruce entre post-punk, coldwave, new wave, synth-pop y darkwave.</p></div></div>
+  <div class="cards">
+    <article class="card reveal" style="--i:0"><span class="card-index">SONIDO</span><h3>Post-punk</h3><p>Bajo protagonista, guitarras rítmicas, repetición y una interpretación vocal distante.</p></article>
+    <article class="card reveal" style="--i:1"><span class="card-index">SONIDO</span><h3>Coldwave</h3><p>Texturas frías, producción minimalista, sintetizadores y atmósferas austeras.</p></article>
+    <article class="card reveal" style="--i:2"><span class="card-index">SONIDO</span><h3>Synth-pop</h3><p>Cajas de ritmo y capas sintéticas que amplían el espacio sonoro y el componente bailable.</p></article>
+    <article class="card reveal" style="--i:3"><span class="card-index">CONTEXTO</span><h3>Kino</h3><p>El rock ruso y la escena de la Perestroika forman parte del contexto musical con el que se relaciona el proyecto.</p></article>
+    <article class="card reveal" style="--i:4"><span class="card-index">INFLUENCIAS</span><h3>The Cure</h3><p>La tradición post-punk y darkwave aparece como referencia contextual de su sonido.</p></article>
+    <article class="card reveal" style="--i:5"><span class="card-index">INFLUENCIAS</span><h3>Depeche Mode</h3><p>La tradición synth-pop aporta un marco para comprender el uso de secuencias y sintetizadores.</p></article>
+  </div>
+  <div style="height:50px"></div>
+  <div class="feature reveal"><div><div class="title-small">CANCIÓN DESTACADA</div><h3>Судно</h3><p class="muted mono">Борис Рыжий / Этажи · 2018</p></div><p class="muted">Una de las canciones más reconocibles del grupo. Su popularidad se expandió internacionalmente en 2020 y ayudó a presentar a Molchat Doma ante una audiencia mucho mayor.</p></div>
+  <div class="feature reveal"><div><div class="title-small">OTRAS CANCIONES</div><h3>Клетка / Тоска / Дискотека</h3></div><p class="muted">Estos temas permiten observar distintos motivos recurrentes del catálogo: encierro, nostalgia, vacío urbano, aislamiento y tensión entre baile y melancolía.</p></div>
+</div>
+</section>
+
+<section class="section" id="discografia">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">03</span><div><h2>Discografía</h2><p class="section-sub">Álbumes de estudio y lanzamientos posteriores. Las portadas de esta interfaz son gráficos geométricos originales; no se cargan imágenes externas.</p></div></div>
+  <div class="album-tabs" id="albumTabs" role="tablist">
+    <button class="active" data-key="a1" role="tab" aria-selected="true">2017</button><button data-key="a2" role="tab" aria-selected="false">2018</button><button data-key="a3" role="tab" aria-selected="false">2020</button><button data-key="a4" role="tab" aria-selected="false">2024</button><button data-key="a5" role="tab" aria-selected="false">2025</button>
+  </div>
+  <div class="album-grid" id="albumGrid"></div>
+  <div class="album-detail" id="albumDetail"></div>
+</div>
+</section>
+
+<section class="section" id="escuchar">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">03.1</span><div><h2>Escuchar</h2><p class="section-sub">Accesos directos a plataformas oficiales y perfiles de la banda. No se incrustan reproductores ni archivos de audio: cada botón abre el servicio correspondiente.</p></div></div>
+  <div class="listen-grid">
+    <a class="listen reveal" style="--i:0" href="https://open.spotify.com/artist/1nVq0hKIVReeaiB3xJgKf0" target="_blank" rel="noopener"><b>Spotify</b>Perfil oficial</a>
+    <a class="listen reveal" style="--i:1" href="https://music.apple.com/us/artist/molchat-doma/1478740208" target="_blank" rel="noopener"><b>Apple Music</b>Catálogo</a>
+    <a class="listen reveal" style="--i:2" href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener"><b>Bandcamp</b>Discografía</a>
+    <a class="listen reveal" style="--i:3" href="https://www.youtube.com/molchatdoma" target="_blank" rel="noopener"><b>YouTube</b>Videos oficiales</a>
+    <a class="listen reveal" style="--i:4" href="https://music.youtube.com/channel/UCxM7Qm8xT8K8aM2WvY6w7vQ" target="_blank" rel="noopener"><b>YouTube Music</b>Música</a>
+    <a class="listen reveal" style="--i:5" href="https://soundcloud.com/molchatdoma" target="_blank" rel="noopener"><b>SoundCloud</b>Perfil</a>
+    <a class="listen reveal" style="--i:0" href="https://tidal.com/browse/artist/10599517" target="_blank" rel="noopener"><b>TIDAL</b>Streaming</a>
+    <a class="listen reveal" style="--i:1" href="https://www.deezer.com/en/artist/1143648" target="_blank" rel="noopener"><b>Deezer</b>Streaming</a>
+  </div>
+</div>
+</section>
+
+<section class="section" id="estetica">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">04</span><div><h2>Estética</h2><p class="section-sub">Un sistema visual basado en brutalismo, arquitectura postsoviética, retículas, contraste y tipografía condensada.</p></div></div>
+  <div class="grid2">
+    <div class="reveal">
+      <div class="facts">
+        <div class="fact"><b>ARQUITECTURA</b><span>Hormigón visto, vivienda colectiva, geometría monumental y repetición modular.</span></div>
+        <div class="fact"><b>FOTOGRAFÍA</b><span>Blanco y negro, baja saturación, alto contraste y espacios urbanos vacíos.</span></div>
+        <div class="fact"><b>DISEÑO GRÁFICO</b><span>Tipografías condensadas, cirílico, retículas y textura de grano.</span></div>
+        <div class="fact"><b>COMPOSICIÓN</b><span>Jerarquía tipográfica fuerte, líneas duras y ausencia deliberada de ornamento.</span></div>
+      </div>
+    </div>
+    <div class="reveal">
+      <p class="lead">BRUTALISMO DIGITAL</p>
+      <p class="muted" style="margin-top:14px">La interfaz toma el lenguaje visual de los materiales: bloques sólidos, bordes visibles, módulos rígidos y contraste extremo entre negro, blanco y grises como único sistema de señalización.</p>
+      <div style="height:22px"></div>
+      <div class="palette">
+        <div class="swatch" style="background:#000000">#000000</div>
+        <div class="swatch" style="background:#3a3a3a">#3A3A3A</div>
+        <div class="swatch" style="background:#777777">#777777</div>
+        <div class="swatch" style="background:#929292">#929292</div>
+        <div class="swatch" style="background:#ededed;color:#111">#EDEDED</div>
+        <div class="swatch" style="background:#ffffff;color:#111">#FFFFFF</div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="cultura">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">05</span><div><h2>Cultura</h2><p class="section-sub">El imaginario de la banda se relaciona con Minsk, Europa del Este y referencias postsoviéticas.</p></div></div>
+  <div class="grid2">
+    <div class="reveal"><p class="lead">La arquitectura, la ciudad y el diseño industrial funcionan como parte del contexto visual. El resultado no es una representación literal de la Unión Soviética, sino un lenguaje contemporáneo construido con referencias de Europa del Este.</p></div>
+    <div class="facts reveal">
+      <div class="fact"><b>ORIGEN</b><span>Minsk, Bielorrusia.</span></div>
+      <div class="fact"><b>CONTEXTO</b><span>Europa del Este y cultura postsoviética.</span></div>
+      <div class="fact"><b>ARQUITECTURA</b><span>Brutalismo, bloques de vivienda y monumentalismo.</span></div>
+      <div class="fact"><b>IDENTIDAD</b><span>Oscura, minimalista, urbana y de fuerte contraste.</span></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="section" id="redes">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">05.1</span><div><h2>Redes</h2><p class="section-sub">Perfiles y canales asociados a la presencia oficial de Molchat Doma.</p></div></div>
+  <div class="socials">
+    <a class="social reveal" style="--i:0" href="https://molchatdoma.com/" target="_blank" rel="noopener">Sitio oficial ↗</a>
+    <a class="social reveal" style="--i:1" href="https://www.instagram.com/molchatdomaband/" target="_blank" rel="noopener">Instagram ↗</a>
+    <a class="social reveal" style="--i:2" href="https://www.facebook.com/molchatdomaband/" target="_blank" rel="noopener">Facebook ↗</a>
+    <a class="social reveal" style="--i:3" href="https://vk.com/molchatdoma" target="_blank" rel="noopener">VK ↗</a>
+    <a class="social reveal" style="--i:0" href="https://www.youtube.com/molchatdoma" target="_blank" rel="noopener">YouTube ↗</a>
+    <a class="social reveal" style="--i:1" href="https://www.tiktok.com/@molchatdomaband" target="_blank" rel="noopener">TikTok ↗</a>
+    <a class="social reveal" style="--i:2" href="https://soundcloud.com/molchatdoma" target="_blank" rel="noopener">SoundCloud ↗</a>
+    <a class="social reveal" style="--i:3" href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener">Bandcamp ↗</a>
+  </div>
+</div>
+</section>
+
+<section class="section">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">05.2</span><div><h2>FAQ</h2><p class="section-sub">Preguntas rápidas sobre la banda.</p></div></div>
+  <details class="reveal">
+    <summary>¿Qué significa Molchat Doma?<span class="plus">+</span></summary>
+    <div class="details-body"><p>El nombre se traduce habitualmente como «las casas callan» o «las casas guardan silencio».</p></div>
+  </details>
+  <details class="reveal">
+    <summary>¿De dónde es la banda?<span class="plus">+</span></summary>
+    <div class="details-body"><p>Fue fundada en Minsk, Bielorrusia, en 2017.</p></div>
+  </details>
+  <details class="reveal">
+    <summary>¿Qué género toca?<span class="plus">+</span></summary>
+    <div class="details-body"><p>Su sonido se sitúa entre post-punk, coldwave, new wave y synth-pop, con elementos relacionados con darkwave y minimal wave.</p></div>
+  </details>
+  <details class="reveal">
+    <summary>¿En qué idioma canta?<span class="plus">+</span></summary>
+    <div class="details-body"><p>Las canciones están principalmente interpretadas en ruso.</p></div>
+  </details>
+  <details class="reveal">
+    <summary>¿Qué es Судно?<span class="plus">+</span></summary>
+    <div class="details-body"><p>Es una canción de <i>Этажи</i> (2018) que alcanzó una amplia difusión internacional en 2020.</p></div>
+  </details>
+  <details class="reveal">
+    <summary>¿La estética es literalmente soviética?<span class="plus">+</span></summary>
+    <div class="details-body"><p>Es más preciso describirla como un imaginario postsoviético y europeo del este que utiliza referencias de arquitectura, cultura urbana y diseño gráfico.</p></div>
+  </details>
+</div>
+</section>
+
+<section class="section" id="fuentes">
+<div class="wrap">
+  <div class="section-head reveal"><span class="num">06</span><div><h2>Fuentes</h2><p class="section-sub">Enlaces para consultar directamente información oficial y discografía.</p></div></div>
+  <div class="sources">
+    <div class="source reveal" style="--i:0"><b>SITIO OFICIAL</b><a href="https://molchatdoma.com/" target="_blank" rel="noopener">molchatdoma.com ↗</a></div>
+    <div class="source reveal" style="--i:1"><b>MÚSICA OFICIAL</b><a href="https://molchatdoma.com/music/" target="_blank" rel="noopener">molchatdoma.com/music ↗</a></div>
+    <div class="source reveal" style="--i:2"><b>BANDCAMP</b><a href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener">domamolchat.bandcamp.com ↗</a></div>
+    <div class="source reveal" style="--i:3"><b>REFERENCIA DISCOGRÁFICA</b><a href="https://musicbrainz.org/artist/11bcbbf4-1252-496a-b747-06942f3d76db" target="_blank" rel="noopener">MusicBrainz — Molchat Doma ↗</a></div>
+    <div class="source reveal" style="--i:4"><b>REDES Y CANALES</b><span class="muted">Sitio oficial, Instagram, Facebook, VK, YouTube, TikTok y SoundCloud.</span></div>
+  </div>
+</div>
+</section>
+</main>
+
+<footer>
+<div class="wrap">
+  <div class="footer-title">МОЛЧАТ<br>ДОМА</div>
+  <div class="footer-grid">
+    <div><h4>NAVEGACIÓN</h4><a href="#banda">Banda</a><a href="#musica">Música</a><a href="#discografia">Discografía</a><a href="#estetica">Estética</a></div>
+    <div><h4>MÚSICA</h4><a href="https://open.spotify.com/artist/1nVq0hKIVReeaiB3xJgKf0" target="_blank" rel="noopener">Spotify</a><a href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a><a href="https://www.youtube.com/molchatdoma" target="_blank" rel="noopener">YouTube</a></div>
+    <div><h4>NOTA EDITORIAL</h4><p>Proyecto editorial independiente y no oficial. Esta versión no requiere fotografías ni archivos subidos por el usuario y no contiene formularios rellenables.</p></div>
+  </div>
+  <div class="copyright">© 2026 · C. Betsabe A. R. · ARCHIVO EDITORIAL · MOLCHAT DOMA · HTML / CSS / JS · SIN FORMULARIOS · SIN IMÁGENES EXTERNAS</div>
+</div>
+</footer>
+
+<script>
+(function(){
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- menú móvil ---------- */
+  var menuBtn=document.getElementById('menuBtn'), mobileMenu=document.getElementById('mobileMenu');
+  function closeMenu(){
+    menuBtn.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded','false');
+    mobileMenu.setAttribute('aria-hidden','true');
+    document.body.style.overflow='';
+  }
+  function toggleMenu(){
+    var open = mobileMenu.classList.toggle('open');
+    menuBtn.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuBtn.addEventListener('click', toggleMenu);
+  mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeMenu(); });
+  window.addEventListener('resize', function(){ if(window.innerWidth>=900) closeMenu(); });
+
+  /* ---------- header: cambia de estado sin listener de scroll continuo ---------- */
+  var header = document.getElementById('siteHeader');
+  var sentinel = document.createElement('div');
+  sentinel.style.cssText='position:absolute;top:0;left:0;width:1px;height:1px;';
+  document.body.prepend(sentinel);
+  new IntersectionObserver(function(entries){
+    header.classList.toggle('scrolled', !entries[0].isIntersecting);
+  }).observe(sentinel);
+
+  /* ---------- reveal on scroll ---------- */
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  /* ---------- discografía ---------- */
+  var albums={
+    a1:{name:'С крыш наших домов',year:'2017',label:'Álbum debut',short:'СКД',desc:'Primer álbum del proyecto. Su sonido minimalista y de recursos limitados establece las bases de la identidad de Molchat Doma.',tracks:['Дома Молчат','Крыши','Люди Надоели','Машина Работает','Необычный Человек','Прятки','Технология','Тишина','Я Не Коммунист']},
+    a2:{name:'Этажи',year:'2018',label:'Detriti Records',short:'ЭТАЖИ',desc:'Segundo álbum y punto central de la primera etapa internacional. Combina post-punk, new wave y synth-pop con una producción fría y minimalista.',tracks:['На дне','Танцевать','Фильмы','Волны','Тоска','Прогноз','Судно (Борис Рыжий)','Коммерсанты','Клетка']},
+    a3:{name:'Монумент / Monument',year:'2020',label:'Sacred Bones Records',short:'MON',desc:'Tercer álbum de estudio. Amplía la producción y mantiene el carácter oscuro, rítmico y sintético del grupo.',tracks:['Утонуть','Обречен','Дискотека','Не Смешно','Ответа Нет','Звезды','Удалил Твой Номер','Ленинградский Блюз','Любить и Выполнять']},
+    a4:{name:'Белая Полоса / Belaya Polosa',year:'2024',label:'Sacred Bones Records',short:'БП',desc:'Cuarto álbum de estudio, publicado el 6 de septiembre de 2024. Incorpora nuevas texturas y una relación más marcada con el synth-pop y la música de baile.',tracks:['Ты Же Не Знаешь Кто Я','Колесом','Сон','Белая Полоса','Безнадежный Вальс','Черные Цветы','III','Не Вдвоем','Я Так Устал','Зимняя']},
+    a5:{name:'Live at Panorama Hotel / Belaya Polosa Remixes',year:'2025',label:'Lanzamientos posteriores',short:'LIVE',desc:'La etapa posterior incluye una presentación en vivo y relecturas electrónicas de temas de Belaya Polosa.',tracks:['Тоска / Toska','Чёрные цветы / Chernye Cvety','Судно (Борис Рыжий)','Belaya Polosa — Remixes']}
+  };
+  var grid=document.getElementById('albumGrid'), detail=document.getElementById('albumDetail'), tabs=document.getElementById('albumTabs');
+
+  function paint(key){
+    var a=albums[key];
+    grid.innerHTML=Object.keys(albums).map(function(k){
+      var x=albums[k];
+      return '<article class="album-card'+(k===key?' active':'')+'" data-key="'+k+'" tabindex="0" role="button" aria-label="'+x.name+'">'
+        +'<div class="album-art"><strong>'+x.short+'</strong></div>'
+        +'<div class="album-meta"><div class="album-name">'+x.name+'</div><div class="album-year">'+x.year+' · '+x.label+'</div></div>'
+        +'</article>';
+    }).join('');
+    detail.innerHTML='<div><span class="tag">'+a.label+'</span><h3>'+a.name+'</h3><p class="muted">'+a.desc+'</p></div>'
+      +'<ul class="tracklist">'+a.tracks.map(function(t,i){ return '<li><span>'+String(i+1).padStart(2,'0')+'</span>'+t+'</li>'; }).join('')+'</ul>';
+    grid.querySelectorAll('.album-card').forEach(function(card){
+      card.addEventListener('click', function(){ select(card.dataset.key); });
+      card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(card.dataset.key); } });
+    });
+  }
+  function select(key){
+    grid.classList.remove('fade-in');g
+    detail.classList.remove('fade-in');
+    var finish=function(){
+      paint(key);
+      tabs.querySelectorAll('button').forEach(function(b){
+        var on=b.dataset.key===key;
+        b.classList.toggle('active', on);
+        b.setAttribute('aria-selected', on ? 'true':'false');
+      });
+      requestAnimationFrame(function(){
+        grid.classList.add('fade-in');
+        detail.classList.add('fade-in');
+      });
+    };
+    if(reduced){ finish(); } else { setTimeout(finish, 140); }
+  }
+  tabs.querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click', function(){ select(b.dataset.key); });
+  });
+  select('a1');
+})();
+</script>
+</body>
+</html>
