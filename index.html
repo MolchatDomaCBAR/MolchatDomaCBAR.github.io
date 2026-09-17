@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#101010">
 <meta name="description" content="Archivo editorial no oficial dedicado a Molchat Doma: historia, música, discografía, estética y contexto cultural.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23101010'/%3E%3Crect x='2' y='2' width='28' height='28' fill='none' stroke='%23ededed' stroke-width='2'/%3E%3Crect x='10' y='10' width='12' height='12' fill='none' stroke='%23ededed' stroke-width='1.5'/%3E%3Cline x1='2' y1='30' x2='30' y2='2' stroke='%23ededed' stroke-width='1.5'/%3E%3C/svg%3E">
 <title>МОЛЧАТ ДОМА — Archivo editorial</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,7 +57,8 @@ h2{font-size:clamp(38px,13vw,76px);line-height:.9}
 header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(16,16,16,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top);transition:background-color .3s var(--ease-out),border-color .3s var(--ease-out)}
 header.scrolled{background:rgba(12,12,12,.96);border-color:#4a4a4a}
 .nav{height:var(--header-h);display:flex;align-items:center;justify-content:space-between}
-.logo{font:700 17px var(--display);letter-spacing:.04em;position:relative}
+.logo{display:flex;align-items:center;gap:10px;font:700 17px var(--display);letter-spacing:.04em;position:relative}
+.logo-mark{width:26px;height:26px;flex:none;color:var(--text)}
 .logo small{display:block;font:9px var(--mono);color:var(--muted);letter-spacing:.08em}
 .desktop-nav{display:none;gap:18px;font:10px var(--mono);text-transform:uppercase}
 .desktop-nav a{position:relative;padding:4px 1px}
@@ -195,7 +197,8 @@ details[open] .details-body{max-height:200px}
 .source a{text-decoration:underline;text-decoration-color:#555;text-underline-offset:3px;word-break:break-word}
 
 footer{padding:50px 0 28px;border-top:1px solid var(--line)}
-.footer-title{font:600 clamp(48px,18vw,120px)/.78 var(--display);text-transform:uppercase}
+.footer-title{display:flex;align-items:center;gap:18px;font:600 clamp(48px,18vw,120px)/.78 var(--display);text-transform:uppercase}
+.footer-mark{width:.62em;height:.62em;flex:none;color:var(--text)}
 .footer-grid{display:grid;gap:28px;margin-top:32px}
 .footer-grid h4{font:11px var(--mono);color:var(--muted);margin-bottom:9px}
 .footer-grid a,.footer-grid p{font-size:13px;color:#aaa;display:block;margin:5px 0}
@@ -231,7 +234,14 @@ footer{padding:50px 0 28px;border-top:1px solid var(--line)}
 <div class="scanlines" aria-hidden="true"></div>
 <header id="siteHeader">
   <div class="nav wrap">
-    <a class="logo" href="#inicio">МОЛЧАТ ДОМА<small>ARCHIVO EDITORIAL / 2017—</small></a>
+    <a class="logo" href="#inicio">
+      <svg class="logo-mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <rect x="1.5" y="1.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="2"/>
+        <rect x="10" y="10" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <line x1="1.5" y1="30.5" x2="30.5" y2="1.5" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+      <span>МОЛЧАТ ДОМА<small>ARCHIVO EDITORIAL / 2017—</small></span>
+    </a>
     <nav class="desktop-nav">
       <a href="#banda">Banda</a><a href="#musica">Música</a><a href="#discografia">Discografía</a>
       <a href="#estetica">Estética</a><a href="#cultura">Cultura</a><a href="#redes">Redes</a><a href="#fuentes">Fuentes</a>
@@ -457,13 +467,20 @@ footer{padding:50px 0 28px;border-top:1px solid var(--line)}
 
 <footer>
 <div class="wrap">
-  <div class="footer-title">МОЛЧАТ<br>ДОМА</div>
+  <div class="footer-title">
+    <svg class="footer-mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+      <rect x="1.5" y="1.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="2"/>
+      <rect x="10" y="10" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      <line x1="1.5" y1="30.5" x2="30.5" y2="1.5" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    <span>МОЛЧАТ<br>ДОМА</span>
+  </div>
   <div class="footer-grid">
     <div><h4>NAVEGACIÓN</h4><a href="#banda">Banda</a><a href="#musica">Música</a><a href="#discografia">Discografía</a><a href="#estetica">Estética</a></div>
     <div><h4>MÚSICA</h4><a href="https://open.spotify.com/artist/1nVq0hKIVReeaiB3xJgKf0" target="_blank" rel="noopener">Spotify</a><a href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a><a href="https://www.youtube.com/molchatdoma" target="_blank" rel="noopener">YouTube</a></div>
     <div><h4>NOTA EDITORIAL</h4><p>Proyecto editorial independiente y no oficial. Esta versión no requiere fotografías ni archivos subidos por el usuario y no contiene formularios rellenables.</p></div>
   </div>
-  <div class="copyright">© 2026 · C. Betsabe A. R. · ARCHIVO EDITORIAL · MOLCHAT DOMA · HTML / CSS / JS · SIN FORMULARIOS · SIN IMÁGENES EXTERNAS</div>
+  <div class="copyright">© 2026 · ARCHIVO EDITORIAL · MOLCHAT DOMA · HTML / CSS / JS · SIN FORMULARIOS · SIN IMÁGENES EXTERNAS</div>
 </div>
 </footer>
 
@@ -544,7 +561,7 @@ footer{padding:50px 0 28px;border-top:1px solid var(--line)}
     });
   }
   function select(key){
-    grid.classList.remove('fade-in');g
+    grid.classList.remove('fade-in');
     detail.classList.remove('fade-in');
     var finish=function(){
       paint(key);
