@@ -1,586 +1,479 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#101010">
-<meta name="description" content="Archivo editorial no oficial dedicado a Molchat Doma: historia, música, discografía, estética y contexto cultural.">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23101010'/%3E%3Crect x='2' y='2' width='28' height='28' fill='none' stroke='%23ededed' stroke-width='2'/%3E%3Crect x='10' y='10' width='12' height='12' fill='none' stroke='%23ededed' stroke-width='1.5'/%3E%3Cline x1='2' y1='30' x2='30' y2='2' stroke='%23ededed' stroke-width='1.5'/%3E%3C/svg%3E">
-<title>МОЛЧАТ ДОМА</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sistema nervioso periférico y somático · Guía interactiva</title>
+<script>document.documentElement.classList.add("js")</script>
 <style>
-:root{
-  --bg:#101010;--panel:#181818;--surface:#242424;--text:#ededed;
-  --muted:#929292;--line:#3a3a3a;--red:#e6e6e6;--red-bright:#ffffff;--green:#a0a0a0;
-  --white:#f2f2f2;--max:1280px;--header-h:60px;
-  --display:"Archivo Narrow",Impact,sans-serif;
-  --body:"Inter",Arial,sans-serif;--mono:"IBM Plex Mono",monospace;
-  --ease-out:cubic-bezier(.16,1,.3,1);
-  --ease-spring:cubic-bezier(.34,1.56,.64,1);
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--text);font:16px/1.6 var(--body);overflow-x:hidden;-webkit-tap-highlight-color:transparent}
-section[id],main#inicio{scroll-margin-top:var(--header-h)}
-::selection{background:#fff;color:#111}
-:focus-visible{outline:2px solid var(--red-bright);outline-offset:3px}
-body:before{content:"";position:fixed;inset:0;pointer-events:none;z-index:999;opacity:.035;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-.scanlines{position:fixed;inset:0;pointer-events:none;z-index:998;background:repeating-linear-gradient(180deg,rgba(255,255,255,.028) 0 1px,transparent 1px 3px);opacity:.6;mix-blend-mode:overlay}
-a{color:inherit;text-decoration:none}
-button{font:inherit;color:inherit;cursor:pointer;background:none;border:none}
-.wrap{width:min(calc(100% - 32px),var(--max));margin:auto}
-.section{padding:64px 0;border-top:1px solid var(--line)}
-.section-head{display:grid;grid-template-columns:38px 1fr;gap:12px;margin-bottom:34px}
-.num{font:600 12px var(--mono);color:var(--red-bright);padding-top:5px}
-h2,h3,h4{font-family:var(--display);font-weight:600;text-transform:uppercase;letter-spacing:.01em}
-h2{font-size:clamp(38px,13vw,76px);line-height:.9}
-.section-sub{grid-column:2;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;max-width:62ch;font-size:14px}
-.mono{font-family:var(--mono)}
-.muted{color:var(--muted)}
-.tag{display:inline-block;border:1px solid var(--line);padding:4px 8px;font:10px var(--mono);color:#aaa;text-transform:uppercase;margin:3px 3px 0 0}
-
-/* ---------- accesibilidad / movimiento ---------- */
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto}
-  .reveal{transition:opacity .25s linear!important;transform:none!important}
-  .status-dot,.hero h1 span.glyph,.scanlines{animation:none!important}
-  *{animation-duration:.01ms!important;animation-iteration-count:1!important}
-}
-
-/* ---------- reveal system (scroll) ---------- */
-.reveal{opacity:0;transform:translateY(26px);transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);transition-delay:calc(var(--i,0) * 70ms)}
-.reveal.is-visible{opacity:1;transform:translateY(0)}
-
-/* ---------- header ---------- */
-header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(16,16,16,.86);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top);transition:background-color .3s var(--ease-out),border-color .3s var(--ease-out)}
-header.scrolled{background:rgba(12,12,12,.96);border-color:#4a4a4a}
-.nav{height:var(--header-h);display:flex;align-items:center;justify-content:space-between}
-.logo{display:flex;align-items:center;gap:10px;font:700 17px var(--display);letter-spacing:.04em;position:relative}
-.logo-mark{width:26px;height:26px;flex:none;color:var(--text)}
-.logo small{display:block;font:9px var(--mono);color:var(--muted);letter-spacing:.08em}
-.desktop-nav{display:none;gap:18px;font:10px var(--mono);text-transform:uppercase}
-.desktop-nav a{position:relative;padding:4px 1px}
-.desktop-nav a:after{content:"";position:absolute;left:0;bottom:-1px;width:100%;height:1px;background:var(--red-bright);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-out)}
-@media(hover:hover) and (pointer:fine){
-  .desktop-nav a:hover{color:#fff}
-  .desktop-nav a:hover:after{transform:scaleX(1)}
-}
-.menu{position:relative;width:42px;height:42px;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:border-color .25s var(--ease-out)}
-.menu:active{transform:scale(.94)}
-.menu span{position:absolute;left:12px;width:18px;height:1.5px;background:var(--text);transition:transform .4s var(--ease-spring),opacity .18s linear,top .3s var(--ease-out)}
-.menu span:nth-child(1){top:15px}
-.menu span:nth-child(2){top:20.5px}
-.menu span:nth-child(3){top:26px}
-.menu.open span:nth-child(1){top:20.5px;transform:rotate(45deg)}
-.menu.open span:nth-child(2){opacity:0}
-.menu.open span:nth-child(3){top:20.5px;transform:rotate(-45deg)}
-
-.mobile-menu{position:fixed;inset:var(--header-h) 0 0;background:var(--bg);z-index:99;padding:26px 16px;transform:translateX(102%);transition:transform .45s var(--ease-out);visibility:hidden}
-.mobile-menu.open{transform:none;visibility:visible}
-.mobile-menu a{display:block;padding:14px 0;border-bottom:1px solid var(--line);font:26px var(--display);text-transform:uppercase;opacity:0;transform:translateY(16px);transition:opacity .4s var(--ease-out),transform .4s var(--ease-out)}
-.mobile-menu a span{font:10px var(--mono);color:var(--red-bright);margin-right:12px}
-.mobile-menu.open a{opacity:1;transform:none}
-.mobile-menu.open a:nth-child(1){transition-delay:.06s}
-.mobile-menu.open a:nth-child(2){transition-delay:.11s}
-.mobile-menu.open a:nth-child(3){transition-delay:.16s}
-.mobile-menu.open a:nth-child(4){transition-delay:.21s}
-.mobile-menu.open a:nth-child(5){transition-delay:.26s}
-.mobile-menu.open a:nth-child(6){transition-delay:.31s}
-.mobile-menu.open a:nth-child(7){transition-delay:.36s}
-.mobile-menu.open a:nth-child(8){transition-delay:.41s}
-
-/* ---------- botones ---------- */
-.btn{display:flex;justify-content:center;align-items:center;border:1px solid #666;background:transparent;padding:13px 15px;font:11px var(--mono);text-transform:uppercase;transition:background-color .3s var(--ease-out),color .3s var(--ease-out),border-color .3s var(--ease-out),transform .18s var(--ease-out)}
-.btn.primary{background:var(--red);border-color:var(--red);color:#111}
-@media(hover:hover) and (pointer:fine){.btn:hover{background:var(--white);color:#111;border-color:var(--white)}}
-.btn:active{transform:scale(.97)}
-
-/* ---------- hero ---------- */
-.hero{min-height:100svh;padding:calc(var(--header-h) + 40px) 0 55px;display:flex;align-items:flex-end;position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#101010,#191919)}
-.hero:before{content:"";position:absolute;width:170%;height:60%;right:-55%;bottom:-8%;border:1px solid #303030;transform:skewX(-16deg);box-shadow:0 -110px 0 -109px #303030,0 -220px 0 -219px #303030}
-.hero:after{content:"";position:absolute;inset:auto 0 0;height:42%;background:repeating-linear-gradient(90deg,transparent 0 39px,#262626 40px 41px);opacity:.5}
-.hero-inner{position:relative;z-index:2;width:100%}
-.hero-meta{display:flex;flex-direction:column;gap:5px;font:10px var(--mono);color:var(--muted);text-transform:uppercase;margin-bottom:20px;opacity:0;animation:fadeUp .7s var(--ease-out) .1s forwards}
-.status{display:inline-flex;align-items:center;gap:7px}
-.status-dot{width:6px;height:6px;border-radius:50%;background:var(--red-bright);animation:pulseDot 2.4s ease-in-out infinite}
-.hero h1{font:600 clamp(56px,20vw,170px)/.8 var(--display);text-transform:uppercase;letter-spacing:-.03em;opacity:0;transform:translateY(18px);animation:fadeUp .8s var(--ease-out) .2s forwards}
-.hero h1 .lat{display:block;color:#858585;font:500 clamp(14px,4.6vw,32px)/1 var(--mono);letter-spacing:.08em;margin-top:16px}
-.hero-kicker{margin-top:22px;color:var(--green);font:11px var(--mono);text-transform:uppercase;letter-spacing:.07em;opacity:0;animation:fadeUp .7s var(--ease-out) .35s forwards}
-.hero-desc{margin-top:18px;max-width:600px;border-left:1px solid var(--line);padding-left:15px;color:#b5b5b5;font-size:14px;opacity:0;animation:fadeUp .7s var(--ease-out) .45s forwards}
-.actions{display:flex;flex-direction:column;gap:8px;margin-top:25px;opacity:0;animation:fadeUp .7s var(--ease-out) .55s forwards}
-@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-@keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(194,42,50,.5)}50%{opacity:.45;box-shadow:0 0 0 4px rgba(194,42,50,0)}}
-
-.grid2,.grid3{display:grid;grid-template-columns:1fr;gap:28px}
-.lead{font-size:20px;line-height:1.25}
-.data{border-top:1px solid var(--line)}
-.data div{display:flex;justify-content:space-between;gap:14px;padding:12px 0;border-bottom:1px solid var(--line)}
-.data dt{font:10px var(--mono);color:var(--muted);text-transform:uppercase}
-.data dd{text-align:right;font-size:13px}
-
-.timeline{border-left:1px solid var(--line);padding-left:22px}
-.event{position:relative;padding-bottom:30px}
-.event:before{content:"";position:absolute;left:-27px;top:5px;width:9px;height:9px;background:var(--red-bright)}
-.event .year{font:11px var(--mono);color:var(--red-bright)}
-.event h3{font-size:24px;margin:4px 0}
-.event p{color:var(--muted);font-size:14px}
-
-.cards{display:grid;grid-template-columns:1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
-.card{background:var(--bg);padding:22px;min-height:180px;transition:background-color .3s var(--ease-out),transform .3s var(--ease-out)}
-@media(hover:hover) and (pointer:fine){.card:hover{background:var(--panel);transform:translateY(-3px)}}
-.card-index{font:10px var(--mono);color:var(--red-bright)}
-.card h3{font-size:26px;margin:30px 0 3px}
-.card p{color:#aaa;font-size:13px}
-
-.feature{border-top:1px solid var(--line);padding:24px 0;display:grid;gap:16px}
-.feature h3{font-size:28px}
-.feature .title-small{font:11px var(--mono);color:var(--muted)}
-
-.album-tabs{display:flex;overflow:auto;gap:16px;border-bottom:1px solid var(--line);margin-bottom:20px;-webkit-overflow-scrolling:touch}
-.album-tabs button{padding:10px 2px;border-bottom:2px solid transparent;color:#888;font:11px var(--mono);white-space:nowrap;transition:color .25s var(--ease-out),border-color .25s var(--ease-out);min-height:44px}
-.album-tabs button.active{color:#fff;border-color:var(--red-bright)}
-.album-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease-out),transform .4s var(--ease-out)}
-.album-grid.fade-in{opacity:1;transform:translateY(0)}
-.album-card{border:1px solid var(--line);background:var(--panel);cursor:pointer;transition:transform .3s var(--ease-out),border-color .3s var(--ease-out);min-height:44px}
-@media(hover:hover) and (pointer:fine){.album-card:hover{transform:translateY(-3px);border-color:#666}}
-.album-card:active{transform:scale(.97)}
-.album-card.active{border-color:var(--red-bright)}
-.album-art{aspect-ratio:1;display:grid;place-items:center;background:#1b1b1b;position:relative;overflow:hidden}
-.album-art:before{content:"";position:absolute;inset:12%;border:1px solid #444}
-.album-art:after{content:"";position:absolute;width:140%;height:1px;background:var(--red-bright);transform:rotate(-34deg)}
-.album-art strong{font:600 clamp(22px,7.5vw,50px) var(--display);z-index:2;text-align:center}
-.album-meta{padding:11px}
-.album-name{font:18px var(--display);text-transform:uppercase}
-.album-year{font:9px var(--mono);color:var(--muted)}
-.album-detail{margin-top:15px;border:1px solid var(--line);background:var(--panel);padding:18px;opacity:0;transform:translateY(10px);transition:opacity .4s var(--ease-out) .05s,transform .4s var(--ease-out) .05s}
-.album-detail.fade-in{opacity:1;transform:translateY(0)}
-.album-detail h3{font-size:26px}
-.tracklist{margin-top:14px;border-top:1px solid var(--line);list-style:none}
-.tracklist li{padding:8px 0;border-bottom:1px solid var(--line);font-size:13px}
-.tracklist span{font:10px var(--mono);color:var(--red-bright);margin-right:10px}
-
-.listen-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.listen{border:1px solid var(--line);padding:16px;background:var(--panel);font:11px var(--mono);text-transform:uppercase;min-height:44px;transition:background-color .3s var(--ease-out),color .3s var(--ease-out),transform .3s var(--ease-out)}
-.listen b{display:block;font:22px var(--display);margin-bottom:3px}
-@media(hover:hover) and (pointer:fine){.listen:hover{background:var(--white);color:#111;transform:translateY(-3px)}}
-.listen:active{transform:scale(.97)}
-
-.socials{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.social{border:1px solid var(--line);padding:16px;background:var(--panel);font:11px var(--mono);text-transform:uppercase;min-height:44px;display:flex;align-items:center;transition:background-color .3s var(--ease-out),border-color .3s var(--ease-out),transform .3s var(--ease-out)}
-@media(hover:hover) and (pointer:fine){.social:hover{background:var(--red);border-color:var(--red);color:#111;transform:translateY(-3px)}}
-.social:active{transform:scale(.97)}
-
-.palette{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line)}
-.swatch{height:96px;padding:8px;display:flex;align-items:flex-end;font:9px var(--mono);border-right:1px solid var(--line);border-bottom:1px solid var(--line);transition:transform .25s var(--ease-out)}
-.swatch:nth-child(3n){border-right:0}
-@media(hover:hover) and (pointer:fine){.swatch:hover{transform:scale(1.03)}}
-
-.facts{border-top:1px solid var(--line)}
-.fact{padding:15px 0;border-bottom:1px solid var(--line)}
-.fact b{display:block;font:10px var(--mono);color:var(--red-bright);margin-bottom:4px}
-.fact span{color:#aaa;font-size:14px}
-
-details{border-bottom:1px solid var(--line)}
-summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:20px;font:19px var(--display);text-transform:uppercase;padding:16px 0;min-height:44px}
+:root{--ivory:#F7F3EA;--ink:#202124;--teal:#167C80;--coral:#EF7896;--mustard:#F2C94C;--lav:#B7A0E8;--mint:#9DDCC5;--white:#fff;--r:18px}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--ivory);color:var(--ink);font:17px/1.55 "Helvetica Neue",Helvetica,Arial,sans-serif;padding-top:calc(56px + env(safe-area-inset-top,0px));background-image:radial-gradient(#20212412 1px,transparent 1px);background-size:14px 14px;overflow-x:hidden}
+section{padding:44px 18px 8px;max-width:1100px;margin:0 auto;scroll-margin-top:72px}
+.num{font-weight:900;font-size:.8rem;letter-spacing:.14em;border:2px solid var(--ink);display:inline-block;padding:2px 10px;border-radius:99px;background:var(--mustard);margin-bottom:10px}
+h1{font-size:clamp(2.3rem,13.5vw,5.5rem);line-height:.92;font-weight:900;letter-spacing:-.03em;text-transform:uppercase}
+h2{font-size:clamp(1.8rem,9vw,3.2rem);line-height:1;font-weight:900;letter-spacing:-.02em;text-transform:uppercase;margin-bottom:12px}
+h3{font-size:1.2rem;line-height:1.2;margin-bottom:6px}
+p+p{margin-top:10px}
+.tag{font-weight:800;font-size:.78rem;letter-spacing:.12em;color:var(--teal)}
+.sub{font-size:clamp(1.2rem,6vw,2rem);font-weight:900;color:var(--teal);text-transform:uppercase;margin:8px 0 12px}
+.lema{display:inline-block;background:var(--ink);color:var(--ivory);padding:6px 14px;border-radius:99px;font-weight:700;margin:14px 0}
+.card{background:var(--white);border:2.5px solid var(--ink);border-radius:var(--r);padding:18px;box-shadow:5px 5px 0 var(--ink);margin:18px 0;position:relative}
+.card.c1{background:var(--mint)}.card.c2{background:#fbd3de}.card.c3{background:#fbeaa8}.card.c4{background:#e2d8f7}
+.grid{display:grid;gap:4px}
+.btn{min-height:48px;padding:10px 22px;border:2.5px solid var(--ink);border-radius:99px;background:var(--coral);color:var(--ink);font:800 1rem inherit;font-family:inherit;cursor:pointer;box-shadow:3px 3px 0 var(--ink);touch-action:manipulation}
+.btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+.btn.alt{background:var(--mustard)}
+:focus-visible{outline:4px solid var(--ink);outline-offset:3px;box-shadow:0 0 0 7px var(--mustard)}
+svg{display:block;width:100%;height:auto}
+.hero{display:grid;gap:10px;padding-top:28px}
+.hero-fig{max-width:340px;margin:0 auto;width:100%}
+.pz{width:56px;height:56px;position:absolute}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.chip{min-height:44px;min-width:44px;padding:8px 14px;border:2.5px solid var(--ink);border-radius:99px;background:var(--white);font:700 .92rem inherit;font-family:inherit;cursor:pointer;touch-action:manipulation}
+.chip[aria-pressed=true]{background:var(--ink);color:var(--ivory)}
+.panel{background:var(--white);border:2.5px dashed var(--ink);border-radius:var(--r);padding:16px;min-height:96px}
+.panel strong{display:block;font-size:1.1rem;margin-bottom:4px}
+.hot{cursor:pointer}.hot circle{fill:var(--mustard);stroke:var(--ink);stroke-width:2.5}.hot text{font:800 12px Helvetica,Arial,sans-serif;text-anchor:middle;fill:var(--ink);pointer-events:none}
+.hot.on circle{fill:var(--coral)}
+.hot:focus-visible{outline:none}.hot:focus-visible circle{stroke-width:5}
+.nerve{stroke:var(--teal);stroke-width:3;fill:none;stroke-linecap:round;stroke-dasharray:6 7;animation:flow 2.4s linear infinite}
+@keyframes flow{to{stroke-dashoffset:-26}}
+details{border:2.5px solid var(--ink);border-radius:14px;background:var(--white);margin:10px 0;overflow:hidden}
+summary{min-height:48px;padding:12px 16px;font-weight:800;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
 summary::-webkit-details-marker{display:none}
-summary .plus{font:18px var(--mono);color:var(--red-bright);transition:transform .3s var(--ease-spring);flex:none}
-details[open] summary .plus{transform:rotate(45deg)}
-.details-body{overflow:hidden;max-height:0;transition:max-height .35s var(--ease-out)}
-details[open] .details-body{max-height:200px}
-.details-body p{color:#999;font-size:13px;padding-bottom:16px;max-width:65ch}
-
-.sources{display:grid;gap:8px}
-.source{border:1px solid var(--line);padding:14px;background:var(--panel)}
-.source b{display:block;font:10px var(--mono);color:var(--red-bright);margin-bottom:4px}
-.source a{text-decoration:underline;text-decoration-color:#555;text-underline-offset:3px;word-break:break-word}
-
-footer{padding:50px 0 28px;border-top:1px solid var(--line)}
-.footer-title{display:flex;align-items:center;gap:18px;font:600 clamp(48px,18vw,120px)/.78 var(--display);text-transform:uppercase}
-.footer-mark{width:.62em;height:.62em;flex:none;color:var(--text)}
-.footer-grid{display:grid;gap:28px;margin-top:32px}
-.footer-grid h4{font:11px var(--mono);color:var(--muted);margin-bottom:9px}
-.footer-grid a,.footer-grid p{font-size:13px;color:#aaa;display:block;margin:5px 0}
-.copyright{border-top:1px solid var(--line);margin-top:32px;padding-top:14px;font:9px var(--mono);color:#666}
-
-@media(min-width:600px){
- .wrap{width:min(calc(100% - 48px),var(--max))}
- .actions{flex-direction:row}.actions .btn{width:auto}
- .grid2{grid-template-columns:1.15fr .85fr}.grid3{grid-template-columns:repeat(3,1fr)}
- .cards{grid-template-columns:repeat(2,1fr)}
- .feature{grid-template-columns:1fr 2fr}
- .footer-grid{grid-template-columns:repeat(3,1fr)}
-}
-@media(min-width:900px){
- .desktop-nav{display:flex}.menu{display:none}
- .wrap{width:min(calc(100% - 80px),var(--max))}
- .section{padding:100px 0}
- .section-head{grid-template-columns:70px 1fr;gap:22px;margin-bottom:56px}
- .hero{padding:130px 0 85px}
- .hero-meta{flex-direction:row;justify-content:space-between}
- .hero-desc{font-size:16px}
- .cards{grid-template-columns:repeat(3,1fr)}
- .album-grid{grid-template-columns:repeat(4,1fr)}
- .listen-grid{grid-template-columns:repeat(4,1fr)}
- .socials{grid-template-columns:repeat(4,1fr)}
-}
-@media(max-width:380px){
- .hero h1{font-size:clamp(48px,19vw,80px)}
-}
+summary::after{content:"+";font-size:1.5rem;font-weight:900;color:var(--teal)}
+details[open] summary::after{content:"−"}
+details>div{padding:0 16px 14px}
+.flow{list-style:none;padding:0;display:grid;gap:0}
+.flow li{display:flex;gap:12px;align-items:center;padding:8px 0;position:relative;font-weight:800}
+.flow li svg{width:46px;height:46px;flex:none}
+.flow li:not(:last-child)::after{content:"↓";position:absolute;left:16px;bottom:-14px;font-size:1.4rem;font-weight:900;z-index:1}
+.flow li{margin-bottom:12px}
+.badge{display:inline-block;border:2px solid var(--ink);border-radius:8px;padding:0 8px;font-size:.78rem;font-weight:900;background:var(--mustard)}
+.stage{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;text-align:left;border:2.5px solid var(--ink);border-radius:14px;background:var(--white);padding:8px 12px;font:800 1rem inherit;font-family:inherit;cursor:pointer;margin:7px 0;touch-action:manipulation}
+.stage svg{width:40px;height:40px;flex:none}
+.stage[aria-pressed=true]{background:var(--mustard);transform:translateX(6px)}
+.note{border-left:6px solid var(--lav);padding:8px 14px;background:#ffffffaa;font-size:.95rem;margin-top:12px}
+.tree{display:grid;gap:10px}
+.node{border:2.5px solid var(--ink);border-radius:14px;padding:12px;background:var(--white)}
+.node .node{margin-top:10px}
+.n-snc{background:var(--lav)}.n-snp{background:var(--mint)}.n-som{background:#fbd3de}.n-aut{background:#fbeaa8}
+.opt{display:block;width:100%;text-align:left;min-height:56px;margin:9px 0;padding:12px 14px;border:2.5px solid var(--ink);border-radius:14px;background:var(--white);font:700 1rem inherit;font-family:inherit;cursor:pointer;touch-action:manipulation}
+.opt.ok{background:var(--mint)}.opt.bad{background:#fbd3de}
+.opt.ok::after{content:" ✓ correcta"}.opt.bad::after{content:" ✗ incorrecta"}
+.opt:disabled{cursor:default;color:var(--ink)}
+.bar{height:14px;border:2.5px solid var(--ink);border-radius:99px;background:var(--white);overflow:hidden;margin:8px 0 14px}
+.bar i{display:block;height:100%;background:var(--teal);width:0;transition:width .3s}
+.fb{margin-top:10px;padding:12px;border-radius:12px;background:#ffffffcc;border:2px solid var(--ink)}
+.score{font-size:3rem;font-weight:900;color:var(--teal)}
+.cierre{font-size:clamp(1.3rem,6vw,2rem);font-weight:900;line-height:1.2}
+nav.top{position:fixed;top:0;left:0;right:0;z-index:30;background:var(--ivory);border-bottom:3px solid var(--ink);padding-top:env(safe-area-inset-top,0px)}
+.bar-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 14px;min-height:52px;position:relative}
+.brand{display:flex;align-items:center;font-weight:900;font-size:.95rem;letter-spacing:.04em;color:var(--ink);text-decoration:none;min-height:44px;gap:6px}
+.brand svg{width:22px;height:22px;flex:none}
+.brand svg+svg{margin-left:-12px;margin-right:4px}
+.burger{min-height:44px;min-width:44px;padding:0 16px;border:2.5px solid var(--ink);border-radius:99px;background:var(--mustard);font:800 .9rem inherit;font-family:inherit;cursor:pointer;transition:transform .15s}
+.burger:active{transform:scale(.95)}
+#menu{list-style:none;margin:0;padding:8px 14px 14px;position:absolute;top:100%;left:0;right:0;background:var(--ivory);border-bottom:3px solid var(--ink);display:none}
+#menu.open{display:block}
+#menu a{display:flex;align-items:center;min-height:48px;padding:0 12px;color:var(--ink);text-decoration:none;font-weight:800;border-radius:12px;border:2px solid transparent;transition:background-color .2s,border-color .2s}
+#menu a:active{background:var(--lav)}
+#menu a[aria-current=true]{background:var(--mustard);border-color:var(--ink)}
+.snap{animation:snap .9s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes snap{from{translate:-34px -26px;opacity:0}to{translate:0 0;opacity:1}}
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease,translate .2s,box-shadow .2s}
+.js .rv.in{opacity:1;transform:none}
+.btn,.chip,.opt,.stage,summary{transition:transform .15s,background-color .2s,box-shadow .2s,translate .2s,color .2s}
+.chip:active,.opt:active{transform:scale(.98)}
+.hot circle{transform-box:fill-box;transform-origin:center;transition:transform .2s,fill .2s}
+.hot.on circle{transform:scale(1.2)}.hot:active circle{transform:scale(.9)}
+.stage svg{transition:transform .2s}.stage[aria-pressed=true] svg{transform:rotate(-8deg) scale(1.12)}
+.chev{fill:#fff;stroke:#202124;stroke-width:2;transition:fill .25s}
+#chS .chev.lit{fill:#167C80}#chM .chev.lit{fill:#EF7896}
+.t{font:800 13px Helvetica,Arial,sans-serif;fill:#202124}
+.src{display:grid;gap:14px}.src .card{margin:0}
+.src h3{display:flex;gap:8px;align-items:center}.src h3 svg{width:30px;height:30px;flex:none}
+.src a{color:var(--teal);font-weight:800;overflow-wrap:anywhere}
+.src p+p{margin-top:6px}
+@media(hover:hover){.card:hover{translate:-2px -2px;box-shadow:7px 7px 0 var(--ink)}.btn:hover{translate:-1px -1px;box-shadow:4px 4px 0 var(--ink)}.chip[aria-pressed=false]:hover,.opt:not(:disabled):hover{background:var(--mustard)}#menu a:hover{background:#f2c94c66}}
+@media(min-width:700px){.src{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.burger{display:none}#menu{display:flex;position:static;border:0;padding:0;background:none;gap:2px}#menu a{min-height:44px;font-size:.88rem;padding:0 10px}}
+footer{text-align:center;padding:30px 18px;font-size:.85rem}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(min-width:700px){body{font-size:18px}.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}.hero{grid-template-columns:1.2fr 1fr;align-items:center}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}}
+@media(min-width:1024px){section{padding-top:70px}.pz{width:84px;height:84px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.nerve,.snap{animation:none}.js .rv{opacity:1;transform:none;transition:none}.bar i,.stage,.btn,.chip,.opt,.card,.hot circle,.chev,.burger,#menu a,summary{transition:none}}
 </style>
 </head>
 <body>
-<div class="scanlines" aria-hidden="true"></div>
-<header id="siteHeader">
-  <div class="nav wrap">
-    <a class="logo" href="#inicio">
-      <svg class="logo-mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-        <rect x="1.5" y="1.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="2"/>
-        <rect x="10" y="10" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
-        <line x1="1.5" y1="30.5" x2="30.5" y2="1.5" stroke="currentColor" stroke-width="1.5"/>
-      </svg>
-      <span>МОЛЧАТ ДОМА<small>C. Betsabe A. R. - ARCHIVO EDITORIAL / 2017 — 2026</small></span>
-    </a>
-    <nav class="desktop-nav">
-      <a href="#banda">Banda</a><a href="#musica">Música</a><a href="#discografia">Discografía</a>
-      <a href="#estetica">Estética</a><a href="#cultura">Cultura</a><a href="#redes">Redes</a><a href="#fuentes">Fuentes</a>
-    </nav>
-    <button class="menu" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobileMenu">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="pz" viewBox="0 0 100 100"><path d="M10 10H38C38 -2 62 -2 62 10H90V38C102 38 102 62 90 62V90H62C62 102 38 102 38 90H10V62C22 62 22 38 10 38Z" fill="currentColor" stroke="#202124" stroke-width="5" stroke-linejoin="round"/></symbol>
+</svg>
+
+<nav class="top" aria-label="Navegación principal"><div class="bar-in">
+<a class="brand" href="#inicio"><svg viewBox="0 0 100 100" style="color:var(--coral)" aria-hidden="true"><use href="#pz"/></svg><svg viewBox="0 0 100 100" style="color:var(--mustard)" aria-hidden="true"><use href="#pz"/></svg>SISTEMA NERVIOSO</a>
+<button type="button" class="burger" id="burger" aria-expanded="false" aria-controls="menu">Menú</button>
+<ul id="menu">
+<li><a href="#inicio">Inicio</a></li>
+<li><a href="#periferico">Sistema periférico</a></li>
+<li><a href="#somatico">Sistema somático</a></li>
+<li><a href="#funciones">Funciones</a></li>
+<li><a href="#neurona">Neurona</a></li>
+<li><a href="#repaso">Repaso</a></li>
+<li><a href="#fuentes">Fuentes</a></li>
+</ul></div></nav>
+<header id="inicio" class="hero" style="padding:28px 18px 0;max-width:1100px;margin:0 auto;scroll-margin-top:0">
+<div>
+<p class="tag">ANATOMÍA HUMANA · GUÍA INTERACTIVA</p>
+<h1 style="margin-top:8px">Sistema nervioso</h1>
+<p class="sub">Periférico y somático</p>
+<p>El sistema nervioso periférico conecta el encéfalo y la médula espinal con el resto del cuerpo. Su división somática lleva la sensibilidad hacia el sistema nervioso central y envía órdenes a los músculos esqueléticos.</p>
+<p class="lema">Cada conexión completa el sistema</p>
+<p><button class="btn" id="go">Explorar el sistema</button></p>
+</div>
+<div class="hero-fig" style="position:relative">
+<svg class="pz snap" style="animation-delay:.1s;top:-8px;left:-6px;color:var(--mustard);transform:rotate(-12deg)" aria-hidden="true"><use href="#pz"/></svg>
+<svg class="pz snap" style="animation-delay:.3s;bottom:20px;right:-6px;color:var(--coral);transform:rotate(14deg)" aria-hidden="true"><use href="#pz"/></svg>
+<svg class="pz snap" style="animation-delay:.5s;bottom:-6px;left:6px;color:var(--lav);width:44px;height:44px" aria-hidden="true"><use href="#pz"/></svg>
+<svg viewBox="0 0 200 360" role="img" aria-label="Figura humana esquemática con nervios en turquesa que salen de la médula espinal hacia brazos y piernas">
+<g fill="none" stroke="#202124" stroke-width="3" stroke-linecap="round"><circle cx="100" cy="36" r="22" fill="#fbeaa8"/><path d="M72 66H128V204H72Z" fill="#9DDCC5" stroke-linejoin="round"/><path d="M72 72L40 150L32 215M128 72L160 150L168 215M88 204L82 290L80 350M112 204L118 290L120 350"/></g>
+<path d="M100 56V210" stroke="#B7A0E8" stroke-width="7" stroke-linecap="round"/>
+<path class="nerve" d="M100 90L78 84L48 140L36 210M100 90L122 84L152 140L164 210M100 205L88 240L82 300L80 345M100 205L112 240L118 300L120 345"/>
+</svg>
+</div>
 </header>
-<nav class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <a href="#inicio"><span>00</span>Inicio</a>
-  <a href="#banda"><span>01</span>Banda</a>
-  <a href="#musica"><span>02</span>Música</a>
-  <a href="#discografia"><span>03</span>Discografía</a>
-  <a href="#estetica"><span>04</span>Estética</a>
-  <a href="#cultura"><span>05</span>Cultura</a>
-  <a href="#redes"><span>06</span>Redes</a>
-  <a href="#fuentes"><span>07</span>Fuentes</a>
-</nav>
 
-<main id="inicio">
-<section class="hero">
-  <div class="wrap hero-inner">
-    <div class="hero-meta">
-      <span class="status"><span class="status-dot" aria-hidden="true"></span>53°54′N / 27°34′E — MINSK, BELARUS</span>
-      <span>2017 — ACTUALIDAD</span>
-    </div>
-    <h1>МОЛЧАТ<br>ДОМА<span class="lat">MOLCHAT DOMA</span></h1>
-    <div class="hero-kicker">POST-PUNK / COLDWAVE / NEW WAVE / SYNTH-POP</div>
-    <p class="hero-desc">Archivo editorial no oficial sobre la banda formada en Minsk en 2017: historia, integrantes, sonido, discografía, canciones, estética brutalista, contexto cultural y enlaces oficiales.</p>
-    <div class="actions">
-      <a class="btn primary" href="#banda">Entrar al archivo →</a>
-      <a class="btn" href="#escuchar">Escuchar música →</a>
-    </div>
-  </div>
+<main>
+<section id="periferico" aria-labelledby="t2">
+<span class="num">002</span>
+<h2 id="t2">Sistema nervioso periférico</h2>
+<p>El sistema nervioso periférico (SNP) está formado por nervios y ganglios situados fuera del encéfalo y la médula espinal. Conecta el sistema nervioso central (SNC) con el resto del organismo.</p>
+<div class="card c1"><h3>Receptores y tejidos → nervios periféricos → SNC</h3>
+<ol class="flow" aria-label="Diagrama: los receptores y tejidos envían información por nervios periféricos al sistema nervioso central">
+<li><svg viewBox="0 0 100 100" style="color:var(--mint)"><use href="#pz"/></svg>Receptores y tejidos</li>
+<li><svg viewBox="0 0 100 100" style="color:var(--teal)"><use href="#pz"/></svg>Nervios periféricos</li>
+<li><svg viewBox="0 0 100 100" style="color:var(--lav)"><use href="#pz"/></svg>Sistema nervioso central</li></ol>
+<p class="note">La conducción es bidireccional: hay fibras que llevan información al SNC y fibras que traen órdenes desde él.</p></div>
+<div class="three">
+<details><summary>Nervios craneales</summary><div>Doce pares que salen del encéfalo. Algunos son sensitivos, otros motores y otros mixtos; se ocupan de la cabeza, el cuello y funciones como la visión, el olfato o la audición.</div></details>
+<details><summary>Nervios espinales</summary><div>Treinta y un pares que salen de la médula espinal. Son mixtos: llevan fibras sensitivas y motoras hacia el tronco y las extremidades.</div></details>
+<details><summary>Ganglios nerviosos</summary><div>Agrupaciones de cuerpos de neuronas fuera del SNC. Los ganglios espinales contienen cuerpos de neuronas sensitivas.</div></details>
+<details><summary>Terminaciones y receptores</summary><div>Estructuras que detectan estímulos (tacto, presión, temperatura, dolor, posición) y los convierten en señales nerviosas.</div></details>
+</div>
+<div class="card"><h3>Mapa anatómico interactivo</h3>
+<p>Toca un número o un botón para ver la estructura. Encéfalo y médula espinal pertenecen al SNC y aparecen como referencia.</p>
+<svg viewBox="0 0 200 360" role="img" aria-label="Figura humana con siete puntos seleccionables: encéfalo, médula espinal, ganglios espinales, plexo braquial, nervios de los brazos, nervio ciático y nervios de las piernas" id="body">
+<g fill="none" stroke="#202124" stroke-width="3" stroke-linecap="round"><circle cx="100" cy="36" r="22" fill="#e2d8f7"/><path d="M72 66H128V204H72Z" fill="#fff" stroke-linejoin="round"/><path d="M72 72L40 150L32 215M128 72L160 150L168 215M88 204L82 290L80 350M112 204L118 290L120 350"/></g>
+<path d="M100 56V210" stroke="#B7A0E8" stroke-width="7" stroke-linecap="round"/>
+<path class="nerve" d="M100 90L78 84L48 140L36 210M100 90L122 84L152 140L164 210M100 205L88 240L82 300L80 345M100 205L112 240L118 300L120 345"/>
+<g id="bodyHot"></g></svg>
+<div class="chips" id="bodyChips"></div>
+<div class="panel" id="bodyPanel" aria-live="polite"><strong>Elige una estructura</strong>Aquí aparecerá su descripción.</div></div>
 </section>
 
-<section class="section" id="banda">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">01</span><div><h2>La banda</h2><p class="section-sub">Molchat Doma —Молчат Дома— es un trío bielorruso originario de Minsk, activo desde 2017.</p></div></div>
-  <div class="grid2">
-    <div class="reveal"><p class="lead">Su nombre se traduce aproximadamente como «las casas callan» o «las casas guardan silencio». Su música combina post-punk, new wave, synth-pop y coldwave, con bajo prominente, sintetizadores fríos, cajas de ritmo y voz grave.</p></div>
-    <dl class="data reveal">
-      <div><dt>Nombre</dt><dd>Molchat Doma</dd></div>
-      <div><dt>Cirílico</dt><dd>Молчат Дома</dd></div>
-      <div><dt>Origen</dt><dd>Minsk, Bielorrusia</dd></div>
-      <div><dt>Formación</dt><dd>2017</dd></div>
-      <div><dt>Idioma</dt><dd>Ruso</dd></div>
-      <div><dt>Géneros</dt><dd>Post-punk / coldwave / new wave / synth-pop</dd></div>
-      <div><dt>Integrantes</dt><dd>Egor Shkutko · Roman Komogortsev · Pavel Kozlov</dd></div>
-    </dl>
-  </div>
-  <div style="height:50px"></div>
-  <div class="cards">
-    <article class="card reveal" style="--i:0"><span class="card-index">01 / VOZ</span><h3>Egor Shkutko</h3><p>Vocalista. Su interpretación grave y monótona es uno de los rasgos más reconocibles del grupo.</p><span class="tag">VOCAL</span></article>
-    <article class="card reveal" style="--i:1"><span class="card-index">02 / INSTRUMENTOS</span><h3>Roman Komogortsev</h3><p>Guitarra, sintetizadores y caja de ritmos. Parte central de la composición y producción instrumental.</p><span class="tag">GUITARRA</span><span class="tag">SYNTH</span></article>
-    <article class="card reveal" style="--i:2"><span class="card-index">03 / INSTRUMENTOS</span><h3>Pavel Kozlov</h3><p>Bajo y sintetizadores. Sus líneas de bajo funcionan como columna vertebral de muchas canciones.</p><span class="tag">BAJO</span><span class="tag">SYNTH</span></article>
-  </div>
+<section id="somatico" aria-labelledby="t3">
+<span class="num">003</span>
+<h2 id="t3">Sistema nervioso somático</h2>
+<p>Es una división funcional del SNP. Participa en la sensibilidad somática y en el control de los músculos esqueléticos.</p>
+<div class="two">
+<div class="card c1"><span class="badge">AFERENTE · SENSITIVA</span><h3 style="margin-top:8px">Hacia el sistema nervioso central</h3>
+<p>Transporta información desde los receptores: tacto, presión, temperatura, dolor y propiocepción.</p>
+<ol class="flow" style="margin-top:14px" aria-label="Estímulo, receptor, nervio sensitivo, sistema nervioso central">
+<li><svg viewBox="0 0 100 100" style="color:var(--mustard)"><use href="#pz"/></svg>ESTÍMULO</li>
+<li><svg viewBox="0 0 100 100" style="color:var(--mint)"><use href="#pz"/></svg>RECEPTOR</li>
+<li><svg viewBox="0 0 100 100" style="color:var(--teal)"><use href="#pz"/></svg>NERVIO SENSITIVO</li>
+<li><svg viewBox="0 0 100 100" style="color:var(--lav)"><use href="#pz"/></svg>SNC</li></ol></div>
+<div class="card c2"><span class="badge">EFERENTE · MOTORA</span><h3 style="margin-top:8px">Desde el sistema nervioso central</h3>
+<p>Conduce órdenes motoras hacia los músculos esqueléticos, responsables de los movimientos voluntarios.</p>
+<ol class="flow" style="margin-top:14px" aria-label="Sistema nervioso central, nervio motor, músculo esquelético">
+<li><svg viewBox="0 0 100 100" style="color:var(--lav)"><use href="#pz"/></svg>SNC</li>
+<li><svg viewBox="0 0 100 100" style="color:var(--teal)"><use href="#pz"/></svg>NERVIO MOTOR</li>
+<li><svg viewBox="0 0 100 100" style="color:var(--coral)"><use href="#pz"/></svg>MÚSCULO ESQUELÉTICO</li></ol></div>
+</div>
+
+<div class="card c1"><h3>Ver recorrido</h3>
+<svg viewBox="0 0 320 300" role="img" aria-label="Esquema simplificado: el recorrido sensitivo asciende del receptor al sistema nervioso central; el recorrido motor desciende del sistema nervioso central al músculo">
+<path id="pathS" d="M70 232C70 150 120 130 128 58" fill="none" stroke="#167C80" stroke-width="5" stroke-linecap="round"/>
+<path id="pathM" d="M192 58C200 130 250 150 250 232" fill="none" stroke="#EF7896" stroke-width="5" stroke-dasharray="10 7" stroke-linecap="round"/>
+<g id="chS"></g><g id="chM"></g>
+<rect x="95" y="8" width="130" height="50" rx="12" fill="#B7A0E8" stroke="#202124" stroke-width="3"/><text class="t" x="160" y="38" text-anchor="middle">SNC</text>
+<rect x="10" y="232" width="120" height="48" rx="12" fill="#9DDCC5" stroke="#202124" stroke-width="3"/><text class="t" x="70" y="261" text-anchor="middle">RECEPTOR</text>
+<rect x="190" y="232" width="120" height="48" rx="12" fill="#fbd3de" stroke="#202124" stroke-width="3"/><text class="t" x="250" y="261" text-anchor="middle">MÚSCULO</text>
+<text class="t" x="4" y="140">↑ SENSITIVA</text><text class="t" x="4" y="157" font-weight="600">(aferente)</text>
+<text class="t" x="316" y="140" text-anchor="end">MOTORA ↓</text><text class="t" x="316" y="157" text-anchor="end">(eferente)</text>
+<circle id="dot" r="8" cx="70" cy="232" fill="#167C80" stroke="#202124" stroke-width="3" opacity="0"/></svg>
+<div class="chips"><button type="button" class="btn" id="bS">Ver recorrido sensitivo</button><button type="button" class="btn" id="bM" style="background:var(--mint)">Ver recorrido motor</button><button type="button" class="btn alt" id="bR">Reiniciar</button></div>
+<div class="panel" id="recSt" aria-live="polite">Pulsa un botón para ver la dirección de la señal.</div>
+<p class="note">Animación esquemática: no representa la velocidad real ni la fisiología exacta de los impulsos nerviosos.</p></div>
+
+</section>
+
+<section id="funciones" aria-labelledby="t4">
+<span class="num">004</span>
+<h2 id="t4">Funciones principales</h2>
+<div class="three">
+<div class="card c3"><svg viewBox="0 0 100 60" aria-hidden="true" style="height:60px"><circle cx="50" cy="30" r="8" fill="#EF7896" stroke="#202124" stroke-width="3"/><circle cx="50" cy="30" r="20" fill="none" stroke="#202124" stroke-width="3" stroke-dasharray="4 5"/></svg><h3>Sensibilidad</h3><p>Percepción del tacto, la presión, la temperatura, el dolor y la posición corporal.</p><details><summary>Ampliar</summary><div>Los receptores envían señales por nervios sensitivos. La propiocepción informa de la posición y el movimiento de las articulaciones y músculos.</div></details></div>
+<div class="card c2"><svg viewBox="0 0 100 60" aria-hidden="true" style="height:60px"><path d="M15 40Q35 5 55 30T90 20" fill="none" stroke="#202124" stroke-width="4" stroke-linecap="round"/><path d="M80 12L92 20L80 28" fill="none" stroke="#202124" stroke-width="4"/></svg><h3>Movimiento</h3><p>Participación en el control de los músculos esqueléticos y los movimientos voluntarios.</p><details><summary>Ampliar</summary><div>Las órdenes motoras salen del SNC y llegan al músculo por nervios motores. Intervienen también otras áreas del encéfalo que coordinan el movimiento.</div></details></div>
+<div class="card c1"><svg viewBox="0 0 100 60" aria-hidden="true" style="height:60px"><path d="M10 45L35 15L50 40L65 15L90 45" fill="none" stroke="#202124" stroke-width="4" stroke-linejoin="round"/></svg><h3>Reflejos</h3><p>Respuestas rápidas ante ciertos estímulos mediante circuitos nerviosos reflejos.</p><details><summary>Ampliar</summary><div>En un arco reflejo la señal sensitiva se integra en el SNC, a menudo en la médula espinal, y genera una respuesta motora sin esperar una decisión voluntaria.</div></details></div>
 </div>
 </section>
 
-<section class="section">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">01.1</span><div><h2>Historia</h2><p class="section-sub">Del circuito underground de Minsk a una audiencia internacional.</p></div></div>
-  <div class="timeline">
-    <article class="event reveal" style="--i:0"><span class="year">2017</span><h3>Formación</h3><p>El proyecto surge en Minsk y publica <i>С крыш наших домов</i>, su álbum debut.</p></article>
-    <article class="event reveal" style="--i:1"><span class="year">2018</span><h3>Этажи</h3><p>El segundo álbum consolida el sonido minimalista y coldwave y amplía la circulación internacional del grupo.</p></article>
-    <article class="event reveal" style="--i:2"><span class="year">2019—2020</span><h3>Viralización</h3><p>«Судно» gana una enorme difusión en redes y streaming, ampliando radicalmente la audiencia de la banda.</p></article>
-    <article class="event reveal" style="--i:3"><span class="year">2020</span><h3>Monument</h3><p>El tercer álbum, publicado por Sacred Bones, amplía la producción sin abandonar la identidad sonora.</p></article>
-    <article class="event reveal" style="--i:4"><span class="year">2024</span><h3>Белая Полоса</h3><p>El cuarto álbum de estudio incorpora nuevas texturas y fue publicado el 6 de septiembre de 2024.</p></article>
-    <article class="event reveal" style="--i:5"><span class="year">2025—2026</span><h3>Nueva etapa</h3><p>Continúan los lanzamientos y la actividad internacional, incluyendo <i>Live at Panorama Hotel</i> y <i>Belaya Polosa Remixes</i>.</p></article>
-  </div>
-</div>
+<section id="viaje" aria-labelledby="t5">
+<span class="num">005</span>
+<h2 id="t5">Así viaja la información</h2>
+<p>Toca cada pieza para ver su función.</p>
+<div id="stages" style="margin-top:12px"></div>
+<div class="panel" id="stagePanel" aria-live="polite"><strong>Selecciona una etapa</strong>Verás qué hace en el recorrido.</div>
+<div class="card c3"><h3>Ejemplo: retirar la mano de una superficie caliente</h3>
+<p>Los receptores de temperatura y dolor envían señales por nervios sensitivos hasta la médula espinal. Allí un circuito reflejo puede activar neuronas motoras que contraen los músculos y retiran la mano, a veces antes de que la percepción consciente del dolor esté completa.</p>
+<p class="note">Diagrama simplificado: percepción y respuesta no siempre ocurren en una secuencia rígida, y no todos los movimientos son reflejos.</p></div>
 </section>
 
-<section class="section" id="musica">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">02</span><div><h2>Música</h2><p class="section-sub">Un cruce entre post-punk, coldwave, new wave, synth-pop y darkwave.</p></div></div>
-  <div class="cards">
-    <article class="card reveal" style="--i:0"><span class="card-index">SONIDO</span><h3>Post-punk</h3><p>Bajo protagonista, guitarras rítmicas, repetición y una interpretación vocal distante.</p></article>
-    <article class="card reveal" style="--i:1"><span class="card-index">SONIDO</span><h3>Coldwave</h3><p>Texturas frías, producción minimalista, sintetizadores y atmósferas austeras.</p></article>
-    <article class="card reveal" style="--i:2"><span class="card-index">SONIDO</span><h3>Synth-pop</h3><p>Cajas de ritmo y capas sintéticas que amplían el espacio sonoro y el componente bailable.</p></article>
-    <article class="card reveal" style="--i:3"><span class="card-index">CONTEXTO</span><h3>Kino</h3><p>El rock ruso y la escena de la Perestroika forman parte del contexto musical con el que se relaciona el proyecto.</p></article>
-    <article class="card reveal" style="--i:4"><span class="card-index">INFLUENCIAS</span><h3>The Cure</h3><p>La tradición post-punk y darkwave aparece como referencia contextual de su sonido.</p></article>
-    <article class="card reveal" style="--i:5"><span class="card-index">INFLUENCIAS</span><h3>Depeche Mode</h3><p>La tradición synth-pop aporta un marco para comprender el uso de secuencias y sintetizadores.</p></article>
-  </div>
-  <div style="height:50px"></div>
-  <div class="feature reveal"><div><div class="title-small">CANCIÓN DESTACADA</div><h3>Судно</h3><p class="muted mono">Борис Рыжий / Этажи · 2018</p></div><p class="muted">Una de las canciones más reconocibles del grupo. Su popularidad se expandió internacionalmente en 2020 y ayudó a presentar a Molchat Doma ante una audiencia mucho mayor.</p></div>
-  <div class="feature reveal"><div><div class="title-small">OTRAS CANCIONES</div><h3>Клетка / Тоска / Дискотека</h3></div><p class="muted">Estos temas permiten observar distintos motivos recurrentes del catálogo: encierro, nostalgia, vacío urbano, aislamiento y tensión entre baile y melancolía.</p></div>
-</div>
+<section id="neurona" aria-labelledby="t6">
+<span class="num">006</span>
+<h2 id="t6">La neurona</h2>
+<div class="card c4">
+<svg viewBox="0 0 340 190" role="img" aria-label="Neurona con dendritas, soma, axón con vaina de mielina y nodos de Ranvier, y terminales axónicas">
+<g stroke="#202124" stroke-width="3" fill="none" stroke-linecap="round"><path d="M45 75L15 45M45 90L10 90M45 105L15 135M50 70L30 30"/><path d="M80 90H250"/>
+<path d="M250 90L300 55M250 90L305 90M250 90L300 125"/></g>
+<ellipse cx="65" cy="90" rx="28" ry="26" fill="#EF7896" stroke="#202124" stroke-width="3"/><circle cx="65" cy="90" r="9" fill="#F2C94C" stroke="#202124" stroke-width="2.5"/>
+<g fill="#F2C94C" stroke="#202124" stroke-width="3"><rect x="100" y="78" width="38" height="24" rx="12"/><rect x="146" y="78" width="38" height="24" rx="12"/><rect x="192" y="78" width="38" height="24" rx="12"/></g>
+<g fill="#9DDCC5" stroke="#202124" stroke-width="2.5"><circle cx="300" cy="55" r="7"/><circle cx="305" cy="90" r="7"/><circle cx="300" cy="125" r="7"/></g>
+<path d="M60 165H280" stroke="#202124" stroke-width="4"/><path d="M270 155L282 165L270 175" fill="none" stroke="#202124" stroke-width="4"/>
+<text x="60" y="185" font-family="Helvetica,Arial" font-size="13" font-weight="800">Dirección general de la señal</text>
+<g id="nHot"></g></svg>
+<div class="chips" id="nChips"></div>
+<div class="panel" id="nPanel" aria-live="polite"><strong>Elige una estructura</strong>Verás su nombre y función.</div></div>
 </section>
 
-<section class="section" id="discografia">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">03</span><div><h2>Discografía</h2><p class="section-sub">Álbumes de estudio y lanzamientos posteriores. Las portadas de esta interfaz son gráficos geométricos originales; no se cargan imágenes externas.</p></div></div>
-  <div class="album-tabs" id="albumTabs" role="tablist">
-    <button class="active" data-key="a1" role="tab" aria-selected="true">2017</button><button data-key="a2" role="tab" aria-selected="false">2018</button><button data-key="a3" role="tab" aria-selected="false">2020</button><button data-key="a4" role="tab" aria-selected="false">2024</button><button data-key="a5" role="tab" aria-selected="false">2025</button>
-  </div>
-  <div class="album-grid" id="albumGrid"></div>
-  <div class="album-detail" id="albumDetail"></div>
-</div>
+<section id="diferencias" aria-labelledby="t7">
+<span class="num">007</span>
+<h2 id="t7">Diferencias y relaciones</h2>
+<div class="two">
+<div class="card c1"><h3>Periférico (SNP)</h3><p>División anatómica: nervios y ganglios fuera del encéfalo y la médula espinal.</p></div>
+<div class="card c2"><h3>Somático</h3><p>División funcional del SNP: sensibilidad somática y control de músculos esqueléticos.</p></div></div>
+<div class="tree" role="group" aria-label="Diagrama jerárquico: el sistema nervioso se divide en SNC y SNP; el SNP incluye el sistema somático y el autónomo">
+<div class="node"><strong>Sistema nervioso</strong>
+<div class="node n-snc" style="margin-top:10px">SNC: encéfalo y médula espinal</div>
+<div class="node n-snp"><strong>SNP: nervios y ganglios</strong>
+<div class="node n-som">Sistema nervioso somático (aferente y eferente)</div>
+<div class="node n-aut">Sistema nervioso autónomo (también forma parte del SNP)</div></div></div></div>
+<p class="note">El somático no es un sistema independiente del mismo nivel que el SNP: está contenido en él.</p>
 </section>
 
-<section class="section" id="escuchar">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">03.1</span><div><h2>Escuchar</h2><p class="section-sub">Accesos directos a plataformas oficiales y perfiles de la banda. No se incrustan reproductores ni archivos de audio: cada botón abre el servicio correspondiente.</p></div></div>
-  <div class="listen-grid">
-    <a class="listen reveal" style="--i:0" href="https://open.spotify.com/artist/1nVq0hKIVReeaiB3xJgKf0" target="_blank" rel="noopener"><b>Spotify</b>Perfil oficial</a>
-    <a class="listen reveal" style="--i:1" href="https://music.apple.com/us/artist/molchat-doma/1478740208" target="_blank" rel="noopener"><b>Apple Music</b>Catálogo</a>
-    <a class="listen reveal" style="--i:2" href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener"><b>Bandcamp</b>Discografía</a>
-    <a class="listen reveal" style="--i:3" href="https://www.youtube.com/molchatdoma" target="_blank" rel="noopener"><b>YouTube</b>Videos oficiales</a>
-    <a class="listen reveal" style="--i:4" href="https://music.youtube.com/channel/UCxM7Qm8xT8K8aM2WvY6w7vQ" target="_blank" rel="noopener"><b>YouTube Music</b>Música</a>
-    <a class="listen reveal" style="--i:5" href="https://soundcloud.com/molchatdoma" target="_blank" rel="noopener"><b>SoundCloud</b>Perfil</a>
-    <a class="listen reveal" style="--i:0" href="https://tidal.com/browse/artist/10599517" target="_blank" rel="noopener"><b>TIDAL</b>Streaming</a>
-    <a class="listen reveal" style="--i:1" href="https://www.deezer.com/en/artist/1143648" target="_blank" rel="noopener"><b>Deezer</b>Streaming</a>
-  </div>
-</div>
+<section id="repaso" aria-labelledby="t8">
+<span class="num">008</span>
+<h2 id="t8">Cuestionario</h2>
+<div class="card" id="quiz"></div>
 </section>
 
-<section class="section" id="estetica">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">04</span><div><h2>Estética</h2><p class="section-sub">Un sistema visual basado en brutalismo, arquitectura postsoviética, retículas, contraste y tipografía condensada.</p></div></div>
-  <div class="grid2">
-    <div class="reveal">
-      <div class="facts">
-        <div class="fact"><b>ARQUITECTURA</b><span>Hormigón visto, vivienda colectiva, geometría monumental y repetición modular.</span></div>
-        <div class="fact"><b>FOTOGRAFÍA</b><span>Blanco y negro, baja saturación, alto contraste y espacios urbanos vacíos.</span></div>
-        <div class="fact"><b>DISEÑO GRÁFICO</b><span>Tipografías condensadas, cirílico, retículas y textura de grano.</span></div>
-        <div class="fact"><b>COMPOSICIÓN</b><span>Jerarquía tipográfica fuerte, líneas duras y ausencia deliberada de ornamento.</span></div>
-      </div>
-    </div>
-    <div class="reveal">
-      <p class="lead">BRUTALISMO DIGITAL</p>
-      <p class="muted" style="margin-top:14px">La interfaz toma el lenguaje visual de los materiales: bloques sólidos, bordes visibles, módulos rígidos y contraste extremo entre negro, blanco y grises como único sistema de señalización.</p>
-      <div style="height:22px"></div>
-      <div class="palette">
-        <div class="swatch" style="background:#000000">#000000</div>
-        <div class="swatch" style="background:#3a3a3a">#3A3A3A</div>
-        <div class="swatch" style="background:#777777">#777777</div>
-        <div class="swatch" style="background:#929292">#929292</div>
-        <div class="swatch" style="background:#ededed;color:#111">#EDEDED</div>
-        <div class="swatch" style="background:#ffffff;color:#111">#FFFFFF</div>
-      </div>
-    </div>
-  </div>
-</div>
+<section id="glosario" aria-labelledby="t9">
+<span class="num">009</span>
+<h2 id="t9">Glosario</h2>
+<div id="gl"></div>
 </section>
 
-<section class="section" id="cultura">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">05</span><div><h2>Cultura</h2><p class="section-sub">El imaginario de la banda se relaciona con Minsk, Europa del Este y referencias postsoviéticas.</p></div></div>
-  <div class="grid2">
-    <div class="reveal"><p class="lead">La arquitectura, la ciudad y el diseño industrial funcionan como parte del contexto visual. El resultado no es una representación literal de la Unión Soviética, sino un lenguaje contemporáneo construido con referencias de Europa del Este.</p></div>
-    <div class="facts reveal">
-      <div class="fact"><b>ORIGEN</b><span>Minsk, Bielorrusia.</span></div>
-      <div class="fact"><b>CONTEXTO</b><span>Europa del Este y cultura postsoviética.</span></div>
-      <div class="fact"><b>ARQUITECTURA</b><span>Brutalismo, bloques de vivienda y monumentalismo.</span></div>
-      <div class="fact"><b>IDENTIDAD</b><span>Oscura, minimalista, urbana y de fuerte contraste.</span></div>
-    </div>
-  </div>
-</div>
+<section id="cierre" aria-labelledby="t10">
+<span class="num">010</span>
+<h2 id="t10">Cierre</h2>
+<div class="card c3"><p class="cierre">«El sistema nervioso funciona mediante conexiones: recibe información, la integra y coordina respuestas».</p>
+<ol style="margin:14px 0 0 20px"><li>El SNP conecta el SNC con el resto del cuerpo.</li><li>El somático lleva sensibilidad y controla músculos esqueléticos.</li><li>La información viaja por vías aferentes y eferentes, a veces mediante reflejos.</li></ol></div>
+<svg viewBox="0 0 300 90" aria-label="Piezas de rompecabezas conectadas" role="img" style="max-width:380px;margin:16px auto"><g><use href="#pz" x="0" y="0" width="80" height="80" style="color:#167C80"/><use href="#pz" x="55" y="5" width="80" height="80" style="color:#EF7896"/><use href="#pz" x="110" y="0" width="80" height="80" style="color:#F2C94C"/><use href="#pz" x="165" y="5" width="80" height="80" style="color:#B7A0E8"/><use href="#pz" x="220" y="0" width="80" height="80" style="color:#9DDCC5"/></g></svg>
+<p style="text-align:center"><button class="btn alt" id="top">Volver al inicio</button></p>
 </section>
-
-<section class="section" id="redes">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">05.1</span><div><h2>Redes</h2><p class="section-sub">Perfiles y canales asociados a la presencia oficial de Molchat Doma.</p></div></div>
-  <div class="socials">
-    <a class="social reveal" style="--i:0" href="https://molchatdoma.com/" target="_blank" rel="noopener">Sitio oficial ↗</a>
-    <a class="social reveal" style="--i:1" href="https://www.instagram.com/molchatdomaband/" target="_blank" rel="noopener">Instagram ↗</a>
-    <a class="social reveal" style="--i:2" href="https://www.facebook.com/molchatdomaband/" target="_blank" rel="noopener">Facebook ↗</a>
-    <a class="social reveal" style="--i:3" href="https://vk.com/molchatdoma" target="_blank" rel="noopener">VK ↗</a>
-    <a class="social reveal" style="--i:0" href="https://www.youtube.com/molchatdoma" target="_blank" rel="noopener">YouTube ↗</a>
-    <a class="social reveal" style="--i:1" href="https://www.tiktok.com/@molchatdomaband" target="_blank" rel="noopener">TikTok ↗</a>
-    <a class="social reveal" style="--i:2" href="https://soundcloud.com/molchatdoma" target="_blank" rel="noopener">SoundCloud ↗</a>
-    <a class="social reveal" style="--i:3" href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener">Bandcamp ↗</a>
-  </div>
+<section id="fuentes" aria-labelledby="t11">
+<span class="num">011</span>
+<h2 id="t11">Fuentes de información</h2>
+<p>Las explicaciones se contrastaron con las páginas marcadas como consultadas. Los enlaces requieren conexión; el resto de la guía funciona sin ella.</p>
+<div class="src" style="margin-top:14px">
+<article class="card c1"><span class="badge">CONSULTADA</span><h3><svg viewBox="0 0 100 100" style="color:#167C80" aria-hidden="true"><use href="#pz"/></svg>MedlinePlus</h3>
+<p><strong>Entidad:</strong> MedlinePlus, Biblioteca Nacional de Medicina de EE. UU.</p>
+<p><strong>Título:</strong> «Nervous system» (Enciclopedia médica, página de imagen).</p>
+<p><strong>Respalda:</strong> El SNP incluye el tejido nervioso fuera del encéfalo y la médula espinal; los nervios sensitivos llevan información al sistema nervioso central y los motores la llevan desde él.</p>
+<p><strong>Fecha de consulta:</strong> 27 de octubre de 2026.</p>
+<p><a href="https://medlineplus.gov/ency/imagepages/18125.htm" target="_blank" rel="noopener noreferrer">medlineplus.gov/ency/imagepages/18125.htm</a></p></article>
+<article class="card c2"><span class="badge">CONSULTADA</span><h3><svg viewBox="0 0 100 100" style="color:#EF7896" aria-hidden="true"><use href="#pz"/></svg>NINDS</h3>
+<p><strong>Entidad:</strong> Instituto Nacional de Trastornos Neurológicos y Accidentes Cerebrovasculares (NINDS), NIH.</p>
+<p><strong>Título:</strong> «Peripheral Neuropathy».</p>
+<p><strong>Respalda:</strong> El SNP como red de comunicación entre el SNC y el resto del cuerpo, y los tipos de nervios: motores, sensitivos y autónomos.</p>
+<p><strong>Fecha de consulta:</strong> 27 de octubre de 2026.</p>
+<p><a href="https://ninds.nih.gov/health-information/disorders/peripheral-neuropathy" target="_blank" rel="noopener noreferrer">ninds.nih.gov/health-information/disorders/peripheral-neuropathy</a></p></article>
+<article class="card c3"><span class="badge">CONSULTADA</span><h3><svg viewBox="0 0 100 100" style="color:#F2C94C" aria-hidden="true"><use href="#pz"/></svg>OpenStax</h3>
+<p><strong>Entidad:</strong> OpenStax (Rice University). Autor principal: J. Gordon Betts y coautores.</p>
+<p><strong>Título:</strong> «Anatomy and Physiology 2e».</p>
+<p><strong>Respalda:</strong> La organización de los temas: capítulo 13 (incluye el sistema nervioso periférico) y capítulo 14, «The Somatic Nervous System» (percepción sensorial, procesamiento central y respuestas motoras). Solo se consultó el índice; para el detalle conviene leer los capítulos.</p>
+<p><strong>Fecha de consulta:</strong> 27 de octubre de 2026.</p>
+<p><a href="https://openstax.org/details/books/anatomy-and-physiology-2e" target="_blank" rel="noopener noreferrer">openstax.org/details/books/anatomy-and-physiology-2e</a></p></article>
+<article class="card c4"><span class="badge">RECOMENDADA</span><h3><svg viewBox="0 0 100 100" style="color:#B7A0E8" aria-hidden="true"><use href="#pz"/></svg>NCBI Bookshelf</h3>
+<p><strong>Entidad:</strong> Centro Nacional de Información Biotecnológica (NCBI), Biblioteca Nacional de Medicina de EE. UU.</p>
+<p><strong>Título:</strong> NCBI Bookshelf (colección de libros).</p>
+<p><strong>Respalda:</strong> Para ampliar con libros de neurociencia y fisiología. No se consultó un capítulo específico, por lo que no respalda ninguna afirmación concreta de esta guía.</p>
+<p><a href="https://www.ncbi.nlm.nih.gov/books/" target="_blank" rel="noopener noreferrer">ncbi.nlm.nih.gov/books</a></p></article>
+<article class="card c1"><span class="badge">RECOMENDADA</span><h3><svg viewBox="0 0 100 100" style="color:#9DDCC5" aria-hidden="true"><use href="#pz"/></svg>Manual MSD</h3>
+<p><strong>Entidad:</strong> Manual MSD (versión en español).</p>
+<p><strong>Título:</strong> Manual MSD, versión para público general.</p>
+<p><strong>Respalda:</strong> Para ampliar sobre el sistema nervioso y sus trastornos. No se consultó una página específica, por lo que no respalda ninguna afirmación concreta de esta guía.</p>
+<p><a href="https://www.msdmanuals.com/es/" target="_blank" rel="noopener noreferrer">msdmanuals.com/es</a></p></article>
 </div>
-</section>
-
-<section class="section">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">05.2</span><div><h2>FAQ</h2><p class="section-sub">Preguntas rápidas sobre la banda.</p></div></div>
-  <details class="reveal">
-    <summary>¿Qué significa Molchat Doma?<span class="plus">+</span></summary>
-    <div class="details-body"><p>El nombre se traduce habitualmente como «las casas callan» o «las casas guardan silencio».</p></div>
-  </details>
-  <details class="reveal">
-    <summary>¿De dónde es la banda?<span class="plus">+</span></summary>
-    <div class="details-body"><p>Fue fundada en Minsk, Bielorrusia, en 2017.</p></div>
-  </details>
-  <details class="reveal">
-    <summary>¿Qué género toca?<span class="plus">+</span></summary>
-    <div class="details-body"><p>Su sonido se sitúa entre post-punk, coldwave, new wave y synth-pop, con elementos relacionados con darkwave y minimal wave.</p></div>
-  </details>
-  <details class="reveal">
-    <summary>¿En qué idioma canta?<span class="plus">+</span></summary>
-    <div class="details-body"><p>Las canciones están principalmente interpretadas en ruso.</p></div>
-  </details>
-  <details class="reveal">
-    <summary>¿Qué es Судно?<span class="plus">+</span></summary>
-    <div class="details-body"><p>Es una canción de <i>Этажи</i> (2018) que alcanzó una amplia difusión internacional en 2020.</p></div>
-  </details>
-  <details class="reveal">
-    <summary>¿La estética es literalmente soviética?<span class="plus">+</span></summary>
-    <div class="details-body"><p>Es más preciso describirla como un imaginario postsoviético y europeo del este que utiliza referencias de arquitectura, cultura urbana y diseño gráfico.</p></div>
-  </details>
-</div>
-</section>
-
-<section class="section" id="fuentes">
-<div class="wrap">
-  <div class="section-head reveal"><span class="num">06</span><div><h2>Fuentes</h2><p class="section-sub">Enlaces para consultar directamente información oficial y discografía.</p></div></div>
-  <div class="sources">
-    <div class="source reveal" style="--i:0"><b>SITIO OFICIAL</b><a href="https://molchatdoma.com/" target="_blank" rel="noopener">molchatdoma.com ↗</a></div>
-    <div class="source reveal" style="--i:1"><b>MÚSICA OFICIAL</b><a href="https://molchatdoma.com/music/" target="_blank" rel="noopener">molchatdoma.com/music ↗</a></div>
-    <div class="source reveal" style="--i:2"><b>BANDCAMP</b><a href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener">domamolchat.bandcamp.com ↗</a></div>
-    <div class="source reveal" style="--i:3"><b>REFERENCIA DISCOGRÁFICA</b><a href="https://musicbrainz.org/artist/11bcbbf4-1252-496a-b747-06942f3d76db" target="_blank" rel="noopener">MusicBrainz — Molchat Doma ↗</a></div>
-    <div class="source reveal" style="--i:4"><b>REDES Y CANALES</b><span class="muted">Sitio oficial, Instagram, Facebook, VK, YouTube, TikTok y SoundCloud.</span></div>
-  </div>
-</div>
+<p class="note">La estructura de la neurona, los ganglios y el arco reflejo corresponden a conocimiento estándar de anatomía y fisiología; contrástalos con los capítulos de OpenStax antes de citarlos como fuente.</p>
 </section>
 </main>
+<footer>Material educativo simplificado. Cada conexión completa el sistema.</footer>
 
-<footer>
-<div class="wrap">
-  <div class="footer-title">
-    <svg class="footer-mark" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-      <rect x="1.5" y="1.5" width="29" height="29" fill="none" stroke="currentColor" stroke-width="2"/>
-      <rect x="10" y="10" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1.5"/>
-      <line x1="1.5" y1="30.5" x2="30.5" y2="1.5" stroke="currentColor" stroke-width="1.5"/>
-    </svg>
-    <span>МОЛЧАТ<br>ДОМА</span>
-  </div>
-  <div class="footer-grid">
-    <div><h4>NAVEGACIÓN</h4><a href="#banda">Banda</a><a href="#musica">Música</a><a href="#discografia">Discografía</a><a href="#estetica">Estética</a></div>
-    <div><h4>MÚSICA</h4><a href="https://open.spotify.com/artist/1nVq0hKIVReeaiB3xJgKf0" target="_blank" rel="noopener">Spotify</a><a href="https://domamolchat.bandcamp.com/" target="_blank" rel="noopener">Bandcamp</a><a href="https://www.youtube.com/molchatdoma" target="_blank" rel="noopener">YouTube</a></div>
-    <div><h4>NOTA EDITORIAL</h4><p>Proyecto editorial independiente y no oficial. Esta versión no requiere fotografías ni archivos subidos por el usuario y no contiene formularios rellenables.</p></div>
-  </div>
-  <div class="copyright">2026 · C. Betsabe A. R. · ARCHIVO EDITORIAL · MOLCHAT DOMA · HTML / CSS / JS · SIN FORMULARIOS · SIN IMÁGENES EXTERNAS</div>
-</div>
-</footer>
+
 
 <script>
 (function(){
-  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+"use strict";
+var NS="http://www.w3.org/2000/svg";
+function $(i){return document.getElementById(i)}
+function panel(el,t,d){el.innerHTML="";var s=document.createElement("strong");s.textContent=t;el.appendChild(s);el.appendChild(document.createTextNode(d))}
 
-  /* ---------- menú móvil ---------- */
-  var menuBtn=document.getElementById('menuBtn'), mobileMenu=document.getElementById('mobileMenu');
-  function closeMenu(){
-    menuBtn.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    menuBtn.setAttribute('aria-expanded','false');
-    mobileMenu.setAttribute('aria-hidden','true');
-    document.body.style.overflow='';
-  }
-  function toggleMenu(){
-    var open = mobileMenu.classList.toggle('open');
-    menuBtn.classList.toggle('open', open);
-    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    mobileMenu.setAttribute('aria-hidden', open ? 'false' : 'true');
-    document.body.style.overflow = open ? 'hidden' : '';
-  }
-  menuBtn.addEventListener('click', toggleMenu);
-  mobileMenu.querySelectorAll('a').forEach(function(a){ a.addEventListener('click', closeMenu); });
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeMenu(); });
-  window.addEventListener('resize', function(){ if(window.innerWidth>=900) closeMenu(); });
-
-  /* ---------- header: cambia de estado sin listener de scroll continuo ---------- */
-  var header = document.getElementById('siteHeader');
-  var sentinel = document.createElement('div');
-  sentinel.style.cssText='position:absolute;top:0;left:0;width:1px;height:1px;';
-  document.body.prepend(sentinel);
-  new IntersectionObserver(function(entries){
-    header.classList.toggle('scrolled', !entries[0].isIntersecting);
-  }).observe(sentinel);
-
-  /* ---------- reveal on scroll ---------- */
-  var revealEls = document.querySelectorAll('.reveal');
-  if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(entry){
-        if(entry.isIntersecting){
-          entry.target.classList.add('is-visible');
-          io.unobserve(entry.target);
-        }
-      });
-    },{threshold:.12, rootMargin:'0px 0px -8% 0px'});
-    revealEls.forEach(function(el){ io.observe(el); });
-  } else {
-    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
-  }
-
-  /* ---------- discografía ---------- */
-  var albums={
-    a1:{name:'С крыш наших домов',year:'2017',label:'Álbum debut',short:'СКД',desc:'Primer álbum del proyecto. Su sonido minimalista y de recursos limitados establece las bases de la identidad de Molchat Doma.',tracks:['Дома Молчат','Крыши','Люди Надоели','Машина Работает','Необычный Человек','Прятки','Технология','Тишина','Я Не Коммунист']},
-    a2:{name:'Этажи',year:'2018',label:'Detriti Records',short:'ЭТАЖИ',desc:'Segundo álbum y punto central de la primera etapa internacional. Combina post-punk, new wave y synth-pop con una producción fría y minimalista.',tracks:['На дне','Танцевать','Фильмы','Волны','Тоска','Прогноз','Судно (Борис Рыжий)','Коммерсанты','Клетка']},
-    a3:{name:'Монумент / Monument',year:'2020',label:'Sacred Bones Records',short:'MON',desc:'Tercer álbum de estudio. Amplía la producción y mantiene el carácter oscuro, rítmico y sintético del grupo.',tracks:['Утонуть','Обречен','Дискотека','Не Смешно','Ответа Нет','Звезды','Удалил Твой Номер','Ленинградский Блюз','Любить и Выполнять']},
-    a4:{name:'Белая Полоса / Belaya Polosa',year:'2024',label:'Sacred Bones Records',short:'БП',desc:'Cuarto álbum de estudio, publicado el 6 de septiembre de 2024. Incorpora nuevas texturas y una relación más marcada con el synth-pop y la música de baile.',tracks:['Ты Же Не Знаешь Кто Я','Колесом','Сон','Белая Полоса','Безнадежный Вальс','Черные Цветы','III','Не Вдвоем','Я Так Устал','Зимняя']},
-    a5:{name:'Live at Panorama Hotel / Belaya Polosa Remixes',year:'2025',label:'Lanzamientos posteriores',short:'LIVE',desc:'La etapa posterior incluye una presentación en vivo y relecturas electrónicas de temas de Belaya Polosa.',tracks:['Тоска / Toska','Чёрные цветы / Chernye Cvety','Судно (Борис Рыжий)','Belaya Polosa — Remixes']}
-  };
-  var grid=document.getElementById('albumGrid'), detail=document.getElementById('albumDetail'), tabs=document.getElementById('albumTabs');
-
-  function paint(key){
-    var a=albums[key];
-    grid.innerHTML=Object.keys(albums).map(function(k){
-      var x=albums[k];
-      return '<article class="album-card'+(k===key?' active':'')+'" data-key="'+k+'" tabindex="0" role="button" aria-label="'+x.name+'">'
-        +'<div class="album-art"><strong>'+x.short+'</strong></div>'
-        +'<div class="album-meta"><div class="album-name">'+x.name+'</div><div class="album-year">'+x.year+' · '+x.label+'</div></div>'
-        +'</article>';
-    }).join('');
-    detail.innerHTML='<div><span class="tag">'+a.label+'</span><h3>'+a.name+'</h3><p class="muted">'+a.desc+'</p></div>'
-      +'<ul class="tracklist">'+a.tracks.map(function(t,i){ return '<li><span>'+String(i+1).padStart(2,'0')+'</span>'+t+'</li>'; }).join('')+'</ul>';
-    grid.querySelectorAll('.album-card').forEach(function(card){
-      card.addEventListener('click', function(){ select(card.dataset.key); });
-      card.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); select(card.dataset.key); } });
-    });
-  }
-  function select(key){
-    grid.classList.remove('fade-in');
-    detail.classList.remove('fade-in');
-    var finish=function(){
-      paint(key);
-      tabs.querySelectorAll('button').forEach(function(b){
-        var on=b.dataset.key===key;
-        b.classList.toggle('active', on);
-        b.setAttribute('aria-selected', on ? 'true':'false');
-      });
-      requestAnimationFrame(function(){
-        grid.classList.add('fade-in');
-        detail.classList.add('fade-in');
-      });
-    };
-    if(reduced){ finish(); } else { setTimeout(finish, 140); }
-  }
-  tabs.querySelectorAll('button').forEach(function(b){
-    b.addEventListener('click', function(){ select(b.dataset.key); });
+/* Mapas seleccionables: chips + puntos SVG */
+function mapa(hotId,chipsId,panelId,data){
+  var hot=$(hotId),chips=$(chipsId),pn=$(panelId),items=[];
+  data.forEach(function(it,i){
+    var g=document.createElementNS(NS,"g");g.setAttribute("class","hot");g.setAttribute("tabindex","0");g.setAttribute("role","button");g.setAttribute("aria-label",it.t);
+    var c=document.createElementNS(NS,"circle");c.setAttribute("cx",it.x);c.setAttribute("cy",it.y);c.setAttribute("r",14);
+    var t=document.createElementNS(NS,"text");t.setAttribute("x",it.x);t.setAttribute("y",it.y+4);t.textContent=i+1;
+    g.appendChild(c);g.appendChild(t);hot.appendChild(g);
+    var b=document.createElement("button");b.type="button";b.className="chip";b.setAttribute("aria-pressed","false");b.textContent=(i+1)+" · "+it.t;chips.appendChild(b);
+    function pick(){items.forEach(function(o){o.g.classList.remove("on");o.b.setAttribute("aria-pressed","false")});g.classList.add("on");b.setAttribute("aria-pressed","true");panel(pn,it.t,it.d)}
+    g.addEventListener("click",pick);b.addEventListener("click",pick);
+    g.addEventListener("keydown",function(e){if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}});
+    items.push({g:g,b:b});
   });
-  select('a1');
+}
+mapa("bodyHot","bodyChips","bodyPanel",[
+ {t:"Encéfalo",x:100,y:36,d:" Pertenece al sistema nervioso central. Integra la información y elabora respuestas. Se muestra como referencia anatómica."},
+ {t:"Médula espinal",x:100,y:150,d:" Pertenece al sistema nervioso central. Conduce información entre el encéfalo y los nervios espinales y contiene circuitos reflejos."},
+ {t:"Ganglios espinales",x:116,y:112,d:" Agrupan cuerpos de neuronas sensitivas en la raíz posterior de los nervios espinales, junto a la médula."},
+ {t:"Plexo braquial",x:80,y:80,d:" Red de nervios espinales de la región cervical baja y torácica alta que origina los nervios del miembro superior."},
+ {t:"Nervios de los brazos",x:44,y:150,d:" Entre ellos el mediano, el ulnar y el radial. Llevan información sensitiva y órdenes motoras."},
+ {t:"Nervio ciático",x:90,y:240,d:" El nervio más grueso del cuerpo. Nace del plexo lumbosacro y se divide en nervio tibial y nervio fibular común."},
+ {t:"Nervios de las piernas",x:84,y:310,d:" Incluyen ramas del tibial y del fibular. Inervan la piel y los músculos de la pierna y el pie."}
+]);
+mapa("nHot","nChips","nPanel",[
+ {t:"Dendritas",x:25,y:45,d:" Prolongaciones ramificadas que reciben señales de otras células y las dirigen hacia el soma."},
+ {t:"Soma",x:65,y:90,d:" Cuerpo celular. Contiene el núcleo y mantiene la actividad metabólica de la neurona."},
+ {t:"Axón",x:90,y:90,d:" Prolongación larga que conduce el impulso nervioso desde el soma hacia las terminales."},
+ {t:"Vaina de mielina",x:119,y:90,d:" Cubierta de lípidos que aísla el axón y acelera la conducción del impulso."},
+ {t:"Nodos de Ranvier",x:142,y:90,d:" Interrupciones entre segmentos de mielina donde el impulso se regenera, lo que permite una conducción saltatoria."},
+ {t:"Terminales axónicas",x:290,y:90,d:" Extremos ramificados del axón que liberan neurotransmisores para comunicarse con otra neurona, un músculo o una glándula."}
+]);
+
+/* Etapas */
+var ST=[["Estímulo","Cambio del entorno o del cuerpo, como calor, presión o estiramiento, capaz de activar receptores.","#F2C94C"],
+["Receptor sensorial","Detecta el estímulo y lo transforma en una señal nerviosa.","#9DDCC5"],
+["Nervio sensitivo","Conduce la señal desde el receptor hacia el sistema nervioso central.","#167C80"],
+["Sistema nervioso central","Integra la información; en un reflejo, la médula espinal puede generar la respuesta de inmediato.","#B7A0E8"],
+["Nervio motor","Lleva la orden desde el sistema nervioso central hacia el músculo.","#167C80"],
+["Músculo","El músculo esquelético se contrae y produce el movimiento.","#EF7896"]];
+var sw=$("stages"),sp=$("stagePanel"),sb=[];
+ST.forEach(function(s,i){
+  var b=document.createElement("button");b.type="button";b.className="stage";b.setAttribute("aria-pressed","false");
+  b.innerHTML='<svg viewBox="0 0 100 100" aria-hidden="true" style="color:'+s[2]+'"><use href="#pz"/></svg><span>'+(i+1)+". "+s[0]+"</span>";
+  b.addEventListener("click",function(){sb.forEach(function(x){x.setAttribute("aria-pressed","false")});b.setAttribute("aria-pressed","true");panel(sp,(i+1)+". "+s[0]," "+s[1])});
+  sw.appendChild(b);sb.push(b);
+});
+
+/* Glosario */
+var GL=[["Sistema nervioso central","Formado por el encéfalo y la médula espinal; integra la información y coordina respuestas."],
+["Sistema nervioso periférico","Nervios y ganglios fuera del SNC que lo conectan con el resto del cuerpo."],
+["Sistema nervioso somático","División funcional del SNP que se ocupa de la sensibilidad somática y del control de los músculos esqueléticos."],
+["Neurona","Célula especializada en recibir, conducir y transmitir señales nerviosas."],
+["Nervio","Haz de prolongaciones de neuronas, envueltas en tejido conjuntivo, que recorre el cuerpo fuera del SNC."],
+["Ganglio","Agrupación de cuerpos de neuronas situada fuera del sistema nervioso central."],
+["Receptor sensorial","Estructura que detecta un estímulo y lo convierte en señal nerviosa."],
+["Vía aferente","Camino que lleva información desde los receptores hacia el SNC."],
+["Vía eferente","Camino que lleva órdenes desde el SNC hacia músculos o glándulas."],
+["Músculo esquelético","Músculo unido al esqueleto, responsable de los movimientos voluntarios."],
+["Propiocepción","Sentido de la posición y el movimiento del propio cuerpo."],
+["Reflejo","Respuesta rápida e involuntaria a un estímulo, mediada por un circuito nervioso reflejo."]];
+GL.forEach(function(g){var d=document.createElement("details"),s=document.createElement("summary"),v=document.createElement("div");s.textContent=g[0];v.textContent=g[1];d.appendChild(s);d.appendChild(v);$("gl").appendChild(d)});
+
+/* Cuestionario */
+var Q=[
+{q:"¿Qué estructuras forman el sistema nervioso periférico?",o:["Encéfalo y médula espinal","Nervios y ganglios fuera del SNC","Solo los músculos","Únicamente los nervios craneales"],c:1,e:"El SNP está formado por nervios y ganglios fuera del encéfalo y la médula espinal."},
+{q:"¿Cómo se describe el sistema nervioso somático respecto al SNP?",o:["Es una división funcional del SNP","Es un sistema independiente del SNP","Es parte del SNC","Es una división anatómica del encéfalo"],c:0,e:"El somático es una división funcional dentro del SNP."},
+{q:"¿Qué recorrido sigue la vía sensitiva o aferente?",o:["SNC → nervio → músculo","Músculo → hueso → piel","Estímulo → receptor → nervio sensitivo → SNC","Nervio motor → receptor"],c:2,e:"La vía aferente lleva la información de los receptores hacia el SNC."},
+{q:"¿Qué estructura de la neurona aísla el axón y acelera la conducción?",o:["Dendrita","Vaina de mielina","Soma","Terminal axónica"],c:1,e:"La vaina de mielina aísla el axón; los nodos de Ranvier permiten la conducción saltatoria."},
+{q:"¿Cuál afirmación sobre los reflejos es correcta?",o:["Todos los movimientos son reflejos","Siempre requieren percepción consciente del dolor","Son respuestas rápidas mediadas por circuitos reflejos","No involucran al SNC"],c:2,e:"Los reflejos son respuestas rápidas por circuitos reflejos; no todos los movimientos lo son."}];
+var st={i:0,s:0,done:false},qz=$("quiz");
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x)e.textContent=x;return e}
+function render(){
+  qz.innerHTML="";
+  if(st.i>=Q.length){
+    qz.appendChild(el("h3","","Resultado final"));qz.appendChild(el("p","score",st.s+" / "+Q.length));
+    qz.appendChild(el("p","",st.s>=4?"Excelente dominio del tema.":st.s>=3?"Buen avance; repasa las secciones donde dudaste.":"Vuelve a leer las secciones y inténtalo de nuevo."));
+    var r=el("button","btn","Volver a intentarlo");r.type="button";r.addEventListener("click",function(){st={i:0,s:0,done:false};render()});qz.appendChild(r);return}
+  var q=Q[st.i];
+  qz.appendChild(el("p","tag","Pregunta "+(st.i+1)+" de "+Q.length));
+  var bar=el("div","bar");bar.setAttribute("role","progressbar");bar.setAttribute("aria-valuemin","0");bar.setAttribute("aria-valuemax",Q.length);bar.setAttribute("aria-valuenow",st.i);var f=el("i");f.style.width=(st.i/Q.length*100)+"%";bar.appendChild(f);qz.appendChild(bar);
+  qz.appendChild(el("h3","",q.q));
+  var fb=el("div","fb");fb.hidden=true;fb.setAttribute("aria-live","polite");var nx=el("button","btn alt",st.i===Q.length-1?"Ver resultado":"Siguiente");nx.type="button";nx.hidden=true;nx.style.marginTop="12px";
+  var bs=[];
+  q.o.forEach(function(t,k){var b=el("button","opt",t);b.type="button";b.addEventListener("click",function(){
+    bs.forEach(function(x){x.disabled=true});
+    if(k===q.c){st.s++;b.classList.add("ok")}else{b.classList.add("bad");bs[q.c].classList.add("ok")}
+    fb.textContent=(k===q.c?"¡Correcto! ":"No es esa. ")+q.e;fb.hidden=false;nx.hidden=false;nx.focus()});
+    qz.appendChild(b);bs.push(b)});
+  qz.appendChild(fb);nx.addEventListener("click",function(){st.i++;render()});qz.appendChild(nx);
+}
+render();
+
+/* Navegación superior */
+var rm=window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+$("go").addEventListener("click",function(){$("periferico").scrollIntoView()});
+$("top").addEventListener("click",function(){window.scrollTo(0,0)});
+var menu=$("menu"),bg=$("burger");
+function closeMenu(){menu.classList.remove("open");bg.setAttribute("aria-expanded","false")}
+bg.addEventListener("click",function(){var o=menu.classList.toggle("open");bg.setAttribute("aria-expanded",o?"true":"false")});
+menu.addEventListener("click",function(e){if(e.target.closest("a"))closeMenu()});
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeMenu()});
+var links=menu.querySelectorAll("a");
+function mark(k){for(var n=0;n<links.length;n++)links[n].setAttribute("aria-current",links[n].getAttribute("href")==="#"+k?"true":"false")}
+mark("inicio");
+var MAP={inicio:"inicio",periferico:"periferico",somatico:"somatico",funciones:"funciones",viaje:"funciones",neurona:"neurona",diferencias:"neurona",repaso:"repaso",glosario:"repaso",cierre:"repaso",fuentes:"fuentes"};
+if("IntersectionObserver" in window){
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting)mark(MAP[e.target.id])})},{rootMargin:"-25% 0px -65% 0px"});
+  Object.keys(MAP).forEach(function(k){io.observe($(k))});
+}
+window.addEventListener("scroll",function(){if(window.innerHeight+window.scrollY>=document.documentElement.scrollHeight-4)mark("fuentes")},{passive:true});
+
+/* Aparición progresiva */
+var rv=document.querySelectorAll("main section h2,main .card,main .tree,main .panel,main .three>details");
+rv.forEach(function(e,i){e.classList.add("rv");e.style.transitionDelay=((i%3)*70)+"ms"});
+if("IntersectionObserver" in window&&!rm){
+  var o2=new IntersectionObserver(function(es,ob){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add("in");ob.unobserve(x.target);setTimeout(function(){x.target.style.transitionDelay=""},900)}})},{threshold:.08});
+  rv.forEach(function(e){o2.observe(e)});
+}else{rv.forEach(function(e){e.classList.add("in")})}
+
+/* Recorridos de la señal */
+var pS=$("pathS"),pM=$("pathM"),dot=$("dot"),rs=$("recSt"),raf=0;
+function chevs(path,gid){var g=$(gid),L=path.getTotalLength();[.3,.6,.92].forEach(function(t){
+  var a=path.getPointAtLength(L*t),b=path.getPointAtLength(Math.min(L,L*t+2)),d=Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI;
+  var c=document.createElementNS(NS,"path");c.setAttribute("d","M-8 -7L6 0L-8 7Z");c.setAttribute("transform","translate("+a.x+" "+a.y+") rotate("+d+")");c.setAttribute("class","chev");c.setAttribute("data-t",t);g.appendChild(c)})}
+chevs(pS,"chS");chevs(pM,"chM");
+function clearAll(){cancelAnimationFrame(raf);dot.setAttribute("opacity","0");var c=document.querySelectorAll(".chev");for(var n=0;n<c.length;n++)c[n].classList.remove("lit")}
+function reiniciar(){clearAll();rs.textContent="Pulsa un botón para ver la dirección de la señal."}
+function correr(sens){
+  clearAll();
+  var path=sens?pS:pM,g=$(sens?"chS":"chM"),L=path.getTotalLength(),ch=g.children;
+  rs.textContent=sens?"Recorrido sensitivo (aferente): receptor → nervio sensitivo → SNC.":"Recorrido motor (eferente): SNC → nervio motor → músculo.";
+  dot.setAttribute("fill",sens?"#167C80":"#EF7896");dot.setAttribute("opacity","1");
+  if(rm){var e=path.getPointAtLength(L);dot.setAttribute("cx",e.x);dot.setAttribute("cy",e.y);for(var n=0;n<ch.length;n++)ch[n].classList.add("lit");return}
+  var t0=null;
+  function paso(ts){if(t0===null)t0=ts;var p=Math.min(1,(ts-t0)/2600),q=path.getPointAtLength(L*p);dot.setAttribute("cx",q.x);dot.setAttribute("cy",q.y);
+    for(var n=0;n<ch.length;n++)if(+ch[n].getAttribute("data-t")<=p)ch[n].classList.add("lit");
+    if(p<1)raf=requestAnimationFrame(paso)}
+  raf=requestAnimationFrame(paso);
+}
+$("bS").addEventListener("click",function(){correr(true)});
+$("bM").addEventListener("click",function(){correr(false)});
+$("bR").addEventListener("click",reiniciar);
 })();
 </script>
 </body>
